@@ -36,7 +36,7 @@
     },
     "buttons": [
       {
-        "title": "Try Free Demo",
+        "title": "Free Trial",
         "url": "/create",
         "target": "_self",
         "variant": "default",
@@ -48,18 +48,18 @@
     "show_locale": true
   },
   "hero": {
-    "title": "AI-Powered Lip Sync Video Generator",
-    "highlight_text": "AI-Powered",
-    "description": "Create perfect lip-synced videos in minutes with our advanced AI technology.<br/>Upload your video and audio, get professional results instantly.",
+    "title": "Professional AI Lip Sync Video Generator",
+    "highlight_text": "AI Lip Sync",
+    "description": "Transform any video with perfect lip synchronization using cutting-edge AI technology.<br/>Upload your video and audio files, get Hollywood-quality results in minutes.",
     "announcement": {
       "label": "NEW",
-      "title": "🎬 Free Demo Available",
+      "title": "🚀 HeyGen AI Integration",
       "url": "/#demo"
     },
-    "tip": "🎁 Try 5 videos free",
+    "tip": "🎁 Start with 50 free credits",
     "buttons": [
       {
-        "title": "Try Free Demo",
+        "title": "Create Lip Sync Video",
         "icon": "RiPlayFill",
         "url": "/create",
         "target": "_self",
@@ -77,7 +77,7 @@
     "show_badge": false
   },
   "branding": {
-    "title": "Powered by Leading AI Technologies",
+    "title": "Powered by Industry-Leading AI Platforms",
     "items": [
       {
         "title": "Next.js",
@@ -216,108 +216,108 @@
   },
   "feature": {
     "name": "feature",
-    "title": "Key Features of ShipAny",
-    "description": "Everything you need to launch your AI SaaS startup quickly and efficiently.",
+    "title": "Advanced AI Lip Sync Features",
+    "description": "Professional-grade video lip synchronization powered by cutting-edge artificial intelligence.",
     "items": [
       {
-        "title": "Next.js Boilerplate",
-        "description": "Production-ready Next.js templates with SEO-friendly structure and i18n support.",
-        "icon": "RiNextjsFill"
-      },
-      {
-        "title": "Authentication & Payments",
-        "description": "Integrated Google OAuth, one-tap login, and Stripe payment processing.",
-        "icon": "RiKey2Fill"
-      },
-      {
-        "title": "Data Infrastructure",
-        "description": "Built-in Supabase integration for reliable and scalable data storage.",
-        "icon": "RiDatabase2Line"
-      },
-      {
-        "title": "One-Click Deployment",
-        "description": "Seamless deployment to Vercel or Cloudflare with automated setup.",
-        "icon": "RiCloudy2Fill"
-      },
-      {
-        "title": "Business Analytics",
-        "description": "Integrated Google Analytics and Search Console for tracking growth.",
-        "icon": "RiBarChart2Line"
-      },
-      {
-        "title": "AI-Ready Infrastructure",
-        "description": "Pre-configured AI integration with built-in credits system and API sales.",
+        "title": "HeyGen AI Integration",
+        "description": "Powered by HeyGen's industry-leading AI technology for precise lip synchronization and natural facial movements.",
         "icon": "RiRobot2Line"
+      },
+      {
+        "title": "Multi-Format Support",
+        "description": "Support for MP4, MOV, AVI video formats and MP3, WAV, AAC audio formats with automatic optimization.",
+        "icon": "RiVideoLine"
+      },
+      {
+        "title": "HD & 4K Quality",
+        "description": "Generate high-definition lip-synced videos up to 4K resolution with professional-grade output quality.",
+        "icon": "RiHdLine"
+      },
+      {
+        "title": "Real-time Processing",
+        "description": "Advanced AI processing pipeline delivers results in minutes, not hours, with live progress tracking.",
+        "icon": "RiTimeLine"
+      },
+      {
+        "title": "Batch Processing",
+        "description": "Process multiple videos simultaneously with our enterprise-grade infrastructure and queue management.",
+        "icon": "RiStackLine"
+      },
+      {
+        "title": "Secure & Private",
+        "description": "Enterprise-level security with encrypted file storage, automatic deletion, and GDPR compliance.",
+        "icon": "RiShieldCheckLine"
       }
     ]
   },
   "stats": {
     "name": "stats",
     "label": "Stats",
-    "title": "People Love ShipAny",
-    "description": "for it's easy to use and fast to ship.",
+    "title": "Trusted by Content Creators Worldwide",
+    "description": "for professional-quality AI lip sync results.",
     "icon": "FaRegHeart",
     "items": [
       {
-        "title": "Trusted by",
-        "label": "99+",
-        "description": "Customers"
+        "title": "Videos Processed",
+        "label": "10K+",
+        "description": "Successfully"
       },
       {
-        "title": "Built in",
-        "label": "20+",
-        "description": "Components"
-      },
-      {
-        "title": "Ship Fast in",
-        "label": "5",
+        "title": "Average Processing",
+        "label": "3",
         "description": "Minutes"
+      },
+      {
+        "title": "Accuracy Rate",
+        "label": "99%",
+        "description": "Lip Sync"
       }
     ]
   },
   "testimonial": {
     "name": "testimonial",
     "label": "Testimonial",
-    "title": "What Users Say About ShipAny",
-    "description": "Hear from developers and founders who launched their AI startups with ShipAny.",
+    "title": "What Creators Say About LipSyncVideo",
+    "description": "Hear from content creators, filmmakers, and businesses using our AI lip sync technology.",
     "icon": "GoThumbsup",
     "items": [
       {
-        "title": "David Chen",
-        "label": "Founder of AIWallpaper.shop",
-        "description": "ShipAny saved us months of development time. We launched our AI wallpaper business in just 2 days and got our first paying customer within a week!",
+        "title": "Sarah Martinez",
+        "label": "YouTube Content Creator",
+        "description": "LipSyncVideo transformed my multilingual content strategy. I can now create perfect lip-synced videos in 5 languages, growing my global audience by 300%!",
         "image": {
           "src": "/imgs/users/1.png"
         }
       },
       {
-        "title": "Rachel Kim",
-        "label": "CTO at HeyBeauty.ai",
-        "description": "The pre-built AI infrastructure is a game-changer. We didn't have to worry about architecture - just focused on our AI beauty tech and went live fast.",
+        "title": "Michael Chen",
+        "label": "Film Director",
+        "description": "The AI lip sync quality is incredible - indistinguishable from professional ADR work. We saved $50K in post-production costs on our last project.",
         "image": {
           "src": "/imgs/users/2.png"
         }
       },
       {
-        "title": "Marcus Thompson",
-        "label": "Solo Developer",
-        "description": "As a solo developer, ShipAny gave me everything I needed - auth, payments, AI integration, and beautiful UI. Launched my SaaS in a weekend!",
+        "title": "Emma Thompson",
+        "label": "Marketing Agency Owner",
+        "description": "Our clients love the quick turnaround. We can deliver lip-synced promotional videos in multiple languages within hours, not weeks.",
         "image": {
           "src": "/imgs/users/3.png"
         }
       },
       {
-        "title": "Sofia Garcia",
-        "label": "CEO of Melodisco",
-        "description": "The templates are production-ready and highly customizable. We built our AI music platform in hours instead of months. Incredible time-to-market!",
+        "title": "David Rodriguez",
+        "label": "E-learning Platform CEO",
+        "description": "Perfect for creating educational content in multiple languages. Our course completion rates increased 40% after adding lip-synced translations.",
         "image": {
           "src": "/imgs/users/4.png"
         }
       },
       {
-        "title": "James Wilson",
-        "label": "Tech Lead at GPTs.works",
-        "description": "ShipAny's infrastructure is rock-solid. We scaled from 0 to 10k users without touching the backend. Best investment for our AI startup.",
+        "title": "Lisa Wang",
+        "label": "Corporate Training Manager",
+        "description": "Game-changer for our global training programs. We can now localize CEO messages and training videos instantly with perfect lip sync quality.",
         "image": {
           "src": "/imgs/users/5.png"
         }
@@ -335,49 +335,49 @@
   "faq": {
     "name": "faq",
     "label": "FAQ",
-    "title": "Frequently Asked Questions About ShipAny",
-    "description": "Have another question? Contact us on Discord or by email.",
+    "title": "Frequently Asked Questions About LipSyncVideo",
+    "description": "Have another question? Contact our support team for assistance.",
     "items": [
       {
-        "title": "What exactly is ShipAny and how does it work?",
-        "description": "ShipAny is a comprehensive NextJS boilerplate designed specifically for building AI SaaS startups. It provides ready-to-use templates, infrastructure setup, and deployment tools that help you launch your AI business in hours instead of days."
+        "title": "What is AI lip sync and how does it work?",
+        "description": "AI lip sync technology analyzes your video and audio files to automatically synchronize lip movements with speech. Our advanced AI models create natural, realistic mouth movements that perfectly match the audio track."
       },
       {
-        "title": "Do I need advanced technical skills to use ShipAny?",
-        "description": "While basic programming knowledge is helpful, ShipAny is designed to be developer-friendly. Our templates and documentation make it easy to get started, even if you're not an expert in AI or cloud infrastructure."
+        "title": "What video and audio formats do you support?",
+        "description": "We support popular video formats (MP4, MOV, AVI) and audio formats (MP3, WAV, AAC). Videos can be up to 4K resolution, and we automatically optimize files for the best processing results."
       },
       {
-        "title": "What types of AI SaaS can I build with ShipAny?",
-        "description": "ShipAny supports a wide range of AI applications, from content generation to data analysis tools. Our templates cover popular use cases like AI chatbots, content generators, image processing apps, and more."
+        "title": "How long does it take to process a video?",
+        "description": "Processing time depends on video length and quality settings. Most videos are completed within 3-5 minutes. You'll receive real-time progress updates and email notifications when your video is ready."
       },
       {
-        "title": "How long does it typically take to launch with ShipAny?",
-        "description": "With ShipAny, you can have a working prototype in hours and a production-ready application in hours. Our one-click deployment and pre-configured infrastructure significantly reduce the traditional months-long development cycle."
+        "title": "Is my content secure and private?",
+        "description": "Yes, we take security seriously. All files are encrypted during upload and processing. Videos are automatically deleted after 24 hours, and we never store or share your content. We're GDPR compliant and follow industry security standards."
       },
       {
-        "title": "What's included in the ShipAny infrastructure?",
-        "description": "ShipAny provides a complete infrastructure stack including authentication, database setup, API integration, payment processing, and scalable cloud deployment. Everything is pre-configured following industry best practices."
+        "title": "How does the credit system work?",
+        "description": "Credits are consumed based on video quality and length. Low quality costs 5 credits, medium 10 credits, high 20 credits, and ultra 30 credits. New users get 50 free credits to start, and you can purchase more anytime."
       },
       {
-        "title": "Can I customize the templates to match my brand?",
-        "description": "Absolutely! All ShipAny templates are fully customizable. You can modify the design, features, and functionality to match your brand identity and specific business requirements while maintaining the robust underlying infrastructure."
+        "title": "Can I use this for commercial projects?",
+        "description": "Absolutely! Our Professional and Enterprise plans include full commercial usage rights. You can use the generated videos for marketing, education, entertainment, or any business purpose without restrictions."
       }
     ]
   },
   "cta": {
     "name": "cta",
-    "title": "Ship your first AI SaaS Startup",
-    "description": "Start from here, ship with ShipAny.",
+    "title": "Create Your First AI Lip Sync Video",
+    "description": "Transform your content with professional AI lip synchronization.",
     "buttons": [
       {
-        "title": "Get ShipAny",
-        "url": "https://shipany.ai",
-        "target": "_blank",
-        "icon": "GoArrowUpRight"
+        "title": "Start Creating",
+        "url": "/create",
+        "target": "_self",
+        "icon": "RiPlayFill"
       },
       {
-        "title": "Read Document",
-        "url": "https://docs.shipany.ai",
+        "title": "View Pricing",
+        "url": "/pricing",
         "target": "_blank",
         "variant": "outline"
       }

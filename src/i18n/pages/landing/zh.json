@@ -23,19 +23,24 @@
           "icon": "RiMoneyDollarCircleLine"
         },
         {
+          "title": "演示",
+          "url": "/#demo",
+          "icon": "RiPlayLine"
+        },
+        {
           "title": "案例展示",
           "url": "/showcase",
-          "icon": "RiApps2Line"
+          "icon": "RiVideoLine"
         }
       ]
     },
     "buttons": [
       {
-        "title": "获取 ShipAny",
-        "url": "https://shipany.ai",
-        "target": "_blank",
-        "variant": "link",
-        "icon": "RiArrowRightUpLine"
+        "title": "免费试用",
+        "url": "/create",
+        "target": "_self",
+        "variant": "default",
+        "icon": "RiPlayFill"
       }
     ],
     "show_sign": true,
@@ -43,28 +48,28 @@
     "show_locale": true
   },
   "hero": {
-    "title": "几小时内快速构建 AI 创业项目，而不是几天",
-    "highlight_text": "快速构建",
-    "description": "ShipAny 是一个用于构建 AI SaaS 创业项目的 NextJS 模板。<br/>通过丰富的模板和组件快速启动。",
+    "title": "专业 AI 视频唇语同步生成器",
+    "highlight_text": "AI 唇语同步",
+    "description": "使用前沿人工智能技术，为任何视频实现完美的唇语同步效果。<br/>上传您的视频和音频文件，几分钟内获得好莱坞级别的专业效果。",
     "announcement": {
-      "label": "2025",
-      "title": "🎉 新年快乐",
-      "url": "/#pricing"
+      "label": "新功能",
+      "title": "🚀 HeyGen AI 集成",
+      "url": "/#demo"
     },
-    "tip": "🎁 2025年前五折优惠",
+    "tip": "🎁 新用户免费获得 50 积分",
     "buttons": [
       {
-        "title": "立即开始",
-        "icon": "RiFlashlightFill",
-        "url": "/#pricing",
+        "title": "创建唇语同步视频",
+        "icon": "RiPlayFill",
+        "url": "/create",
         "target": "_self",
         "variant": "default"
       },
       {
-        "title": "加入 Discord",
-        "icon": "RiDiscordFill",
-        "url": "https://discord.gg/HQNnrzjZQS",
-        "target": "_blank",
+        "title": "观看演示",
+        "icon": "RiVideoFill",
+        "url": "/#demo",
+        "target": "_self",
         "variant": "outline"
       }
     ],
@@ -72,7 +77,7 @@
     "show_badge": false
   },
   "branding": {
-    "title": "ShipAny 建立在巨人的肩膀上",
+    "title": "基于行业领先的 AI 平台构建",
     "items": [
       {
         "title": "Next.js",
@@ -211,62 +216,62 @@
   },
   "feature": {
     "name": "feature",
-    "title": "ShipAny 核心功能",
-    "description": "快速高效启动 AI SaaS 创业所需的一切。",
+    "title": "先进的 AI 唇语同步功能",
+    "description": "由前沿人工智能技术驱动的专业级视频唇语同步服务。",
     "items": [
       {
-        "title": "Next.js 模板",
-        "description": "生产就绪的 Next.js 模板，支持 SEO 友好结构和国际化。",
-        "icon": "RiNextjsFill"
-      },
-      {
-        "title": "身份验证和支付",
-        "description": "集成 Google OAuth、一键登录和 Stripe 支付处理。",
-        "icon": "RiKey2Fill"
-      },
-      {
-        "title": "数据基础设施",
-        "description": "内置 Supabase 集成，提供可靠和可扩展的数据存储。",
-        "icon": "RiDatabase2Line"
-      },
-      {
-        "title": "一键部署",
-        "description": "无缝部署到 Vercel 或 Cloudflare，自动化设置。",
-        "icon": "RiCloudy2Fill"
-      },
-      {
-        "title": "业务分析",
-        "description": "集成 Google Analytics 和 Search Console 追踪增长。",
-        "icon": "RiBarChart2Line"
-      },
-      {
-        "title": "AI 就绪基础设施",
-        "description": "预配置 AI 集成，内置积分系统和 API 销售。",
+        "title": "HeyGen AI 集成",
+        "description": "采用 HeyGen 行业领先的 AI 技术，实现精确的唇语同步和自然的面部动作。",
         "icon": "RiRobot2Line"
+      },
+      {
+        "title": "多格式支持",
+        "description": "支持 MP4、MOV、AVI 视频格式和 MP3、WAV、AAC 音频格式，自动优化处理。",
+        "icon": "RiVideoLine"
+      },
+      {
+        "title": "高清和 4K 质量",
+        "description": "生成高达 4K 分辨率的高清唇语同步视频，提供专业级输出质量。",
+        "icon": "RiHdLine"
+      },
+      {
+        "title": "实时处理",
+        "description": "先进的 AI 处理管道在几分钟内交付结果，而非几小时，提供实时进度跟踪。",
+        "icon": "RiTimeLine"
+      },
+      {
+        "title": "批量处理",
+        "description": "通过我们的企业级基础设施和队列管理，同时处理多个视频。",
+        "icon": "RiStackLine"
+      },
+      {
+        "title": "安全私密",
+        "description": "企业级安全保障，加密文件存储，自动删除，符合 GDPR 合规要求。",
+        "icon": "RiShieldCheckLine"
       }
     ]
   },
   "stats": {
     "name": "stats",
     "label": "统计",
-    "title": "用户喜爱 ShipAny",
-    "description": "因为它易于使用且快速发布。",
+    "title": "全球内容创作者的信赖之选",
+    "description": "专业品质的 AI 唇语同步效果。",
     "icon": "FaRegHeart",
     "items": [
       {
-        "title": "信任",
-        "label": "99+",
-        "description": "客户"
+        "title": "成功处理视频",
+        "label": "10K+",
+        "description": "个"
       },
       {
-        "title": "内置",
-        "label": "20+",
-        "description": "组件"
-      },
-      {
-        "title": "快速发布",
-        "label": "5",
+        "title": "平均处理时间",
+        "label": "3",
         "description": "分钟"
+      },
+      {
+        "title": "唇语同步准确率",
+        "label": "99%",
+        "description": "精确度"
       }
     ]
   },
