@@ -6,8 +6,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authConfig } from '@/auth/config';
+import { auth } from '@/auth';
+import { authOptions } from '@/auth/config';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -39,7 +39,7 @@ const s3Client = new S3Client({
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
-    const session = await getServerSession(authConfig);
+    const session = await auth();
     if (!session?.user) {
       return NextResponse.json(
         { error: 'Authentication required' },

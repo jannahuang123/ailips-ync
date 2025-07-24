@@ -6,8 +6,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authConfig } from '@/auth/config';
+import { auth } from '@/auth';
+import { authOptions } from '@/auth/config';
 import { db } from '@/db';
 import { projects, lipsyncTasks, users } from '@/db/schema';
 import { getAIProviderManager } from '@/lib/ai/provider-manager';
@@ -24,7 +24,7 @@ interface CreateProjectRequest {
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
-    const session = await getServerSession(authConfig);
+    const session = await auth();
     if (!session?.user) {
       return NextResponse.json(
         { error: 'Authentication required' },

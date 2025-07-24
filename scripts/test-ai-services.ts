@@ -6,7 +6,7 @@
  */
 
 import { config } from 'dotenv';
-import fetch from 'node-fetch';
+// 使用 Node.js 18+ 内置的 fetch API
 
 // 加载环境变量
 config({ path: '.env.development' });
