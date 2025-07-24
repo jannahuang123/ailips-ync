@@ -41,7 +41,12 @@ class EnvironmentVerifier {
   }
 
   private async checkBasicEnvironment(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     // 检查 Node.js 版本
     const nodeVersion = process.version;
@@ -78,7 +83,12 @@ class EnvironmentVerifier {
   }
 
   private async checkDatabaseConnection(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
     const databaseUrl = process.env.DATABASE_URL;
 
     if (!databaseUrl) {
@@ -132,7 +142,12 @@ class EnvironmentVerifier {
   }
 
   private async checkAuthConfiguration(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     // 检查 Auth Secret
     const authSecret = process.env.AUTH_SECRET;
@@ -171,7 +186,12 @@ class EnvironmentVerifier {
   }
 
   private async checkPaymentConfiguration(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     const stripePublic = process.env.STRIPE_PUBLIC_KEY;
     const stripePrivate = process.env.STRIPE_PRIVATE_KEY;
@@ -208,7 +228,12 @@ class EnvironmentVerifier {
   }
 
   private async checkStorageConfiguration(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     const requiredStorageVars = [
       'STORAGE_ENDPOINT',
@@ -251,7 +276,12 @@ class EnvironmentVerifier {
   }
 
   private async checkAIServices(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     // 检查 HeyGen API
     const heygenKey = process.env.HEYGEN_API_KEY;
@@ -278,7 +308,12 @@ class EnvironmentVerifier {
   }
 
   private async checkRedisConnection(): Promise<void> {
-    const checks = [];
+    const checks: Array<{
+      name: string;
+      status: 'pass' | 'fail' | 'warning';
+      message: string;
+      required: boolean;
+    }> = [];
 
     const redisHost = process.env.REDIS_HOST;
     const redisPort = process.env.REDIS_PORT;
