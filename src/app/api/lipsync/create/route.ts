@@ -53,9 +53,11 @@ export async function POST(request: NextRequest) {
     }
 
     // Check user credits (if needed)
-    const user = await db.query.users.findFirst({
-      where: eq(users.uuid, session.user.uuid)
-    });
+    const [user] = await db()
+      .select()
+      .from(users)
+      .where(eq(users.uuid, session.user.uuid))
+      .limit(1);
 
     if (!user) {
       return NextResponse.json(
