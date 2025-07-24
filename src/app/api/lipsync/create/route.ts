@@ -76,7 +76,8 @@ export async function POST(request: NextRequest) {
     const projectUuid = uuidv4();
 
     // Create project record
-    const [project] = await db.insert(projects).values({
+    const database = db();
+    const [project] = await database.insert(projects).values({
       uuid: projectUuid,
       user_uuid: session.user.uuid,
       name,
@@ -90,7 +91,7 @@ export async function POST(request: NextRequest) {
     }).returning();
 
     // Create initial task record
-    const [task] = await db.insert(lipsyncTasks).values({
+    const [task] = await database.insert(lipsyncTasks).values({
       project_uuid: projectUuid,
       status: 'queued',
       progress: 0,
@@ -109,7 +110,7 @@ export async function POST(request: NextRequest) {
       });
 
       // Update project with external task ID and provider
-      await db.update(projects)
+      await database.update(projects)
         .set({
           external_task_id: result.taskId,
           provider: result.provider,
@@ -119,7 +120,7 @@ export async function POST(request: NextRequest) {
         .where(eq(projects.uuid, projectUuid));
 
       // Update task status
-      await db.update(lipsyncTasks)
+      await database.update(lipsyncTasks)
         .set({
           status: 'processing',
           started_at: new Date(),
@@ -151,7 +152,7 @@ export async function POST(request: NextRequest) {
       console.error('AI processing failed:', aiError);
 
       // Update project status to failed
-      await db.update(projects)
+      await database.update(projects)
         .set({
           status: 'failed',
           updated_at: new Date(),
@@ -159,7 +160,7 @@ export async function POST(request: NextRequest) {
         .where(eq(projects.uuid, projectUuid));
 
       // Update task with error
-      await db.update(lipsyncTasks)
+      await database.update(lipsyncTasks)
         .set({
           status: 'failed',
           error_message: aiError instanceof Error ? aiError.message : 'Unknown AI processing error',

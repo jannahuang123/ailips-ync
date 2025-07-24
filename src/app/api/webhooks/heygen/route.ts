@@ -36,9 +36,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Find project by external task ID
-    const project = await db.query.projects.findFirst({
-      where: eq(projects.external_task_id, task_id)
-    });
+    const database = db();
+    const [project] = await database
+      .select()
+      .from(projects)
+      .where(eq(projects.external_task_id, task_id))
+      .limit(1);
 
     if (!project) {
       console.error(`Project not found for task_id: ${task_id}`);
@@ -53,7 +56,7 @@ export async function POST(request: NextRequest) {
     // Update project based on status
     if (status === 'completed' || status === 'done') {
       // Task completed successfully
-      await db.update(projects)
+      await database.update(projects)
         .set({
           status: 'completed',
           result_url: result_url,
@@ -62,7 +65,7 @@ export async function POST(request: NextRequest) {
         .where(eq(projects.uuid, project.uuid));
 
       // Update task status
-      await db.update(lipsyncTasks)
+      await database.update(lipsyncTasks)
         .set({
           status: 'completed',
           progress: 100,
@@ -77,7 +80,7 @@ export async function POST(request: NextRequest) {
 
     } else if (status === 'failed' || status === 'error') {
       // Task failed
-      await db.update(projects)
+      await database.update(projects)
         .set({
           status: 'failed',
           updated_at: new Date(),
@@ -85,7 +88,7 @@ export async function POST(request: NextRequest) {
         .where(eq(projects.uuid, project.uuid));
 
       // Update task with error
-      await db.update(lipsyncTasks)
+      await database.update(lipsyncTasks)
         .set({
           status: 'failed',
           progress: 0,
@@ -102,7 +105,7 @@ export async function POST(request: NextRequest) {
       // Task is still processing, update progress
       const currentProgress = progress || 50;
 
-      await db.update(lipsyncTasks)
+      await database.update(lipsyncTasks)
         .set({
           progress: currentProgress,
         })

@@ -11,7 +11,7 @@ import { authOptions } from '@/auth/config';
 import { db } from '@/db';
 import { projects, lipsyncTasks } from '@/db/schema';
 import { getAIProviderManager } from '@/lib/ai/provider-manager';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, desc } from 'drizzle-orm';
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -38,12 +38,15 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     }
 
     // Get project from database
-    const project = await db.query.projects.findFirst({
-      where: and(
+    const database = db();
+    const [project] = await database
+      .select()
+      .from(projects)
+      .where(and(
         eq(projects.uuid, projectId),
         eq(projects.user_uuid, session.user.uuid)
-      )
-    });
+      ))
+      .limit(1);
 
     if (!project) {
       return NextResponse.json(
@@ -53,10 +56,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     }
 
     // Get latest task status
-    const task = await db.query.lipsyncTasks.findFirst({
-      where: eq(lipsyncTasks.project_uuid, projectId),
-      orderBy: (tasks, { desc }) => [desc(tasks.created_at)]
-    });
+    const [task] = await database
+      .select()
+      .from(lipsyncTasks)
+      .where(eq(lipsyncTasks.project_uuid, projectId))
+      .orderBy(desc(lipsyncTasks.created_at))
+      .limit(1);
 
     // If project is completed or failed, return cached status
     if (project.status === 'completed' || project.status === 'failed') {
@@ -89,19 +94,19 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         if (aiStatus.status === 'completed' || aiStatus.status === 'done') {
           newStatus = 'completed';
           newProgress = 100;
-          resultUrl = aiStatus.resultUrl;
+          resultUrl = aiStatus.resultUrl || null;
 
           // Update project in database
-          await db.update(projects)
+          await database.update(projects)
             .set({
               status: 'completed',
-              result_url: aiStatus.resultUrl,
+              result_url: aiStatus.resultUrl || null,
               updated_at: new Date(),
             })
             .where(eq(projects.uuid, projectId));
 
           // Update task in database
-          await db.update(lipsyncTasks)
+          await database.update(lipsyncTasks)
             .set({
               status: 'completed',
               progress: 100,
@@ -114,7 +119,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           newProgress = 0;
 
           // Update project in database
-          await db.update(projects)
+          await database.update(projects)
             .set({
               status: 'failed',
               updated_at: new Date(),
@@ -122,7 +127,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
             .where(eq(projects.uuid, projectId));
 
           // Update task in database
-          await db.update(lipsyncTasks)
+          await database.update(lipsyncTasks)
             .set({
               status: 'failed',
               progress: 0,
@@ -134,7 +139,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           newProgress = aiStatus.progress;
 
           // Update task progress
-          await db.update(lipsyncTasks)
+          await database.update(lipsyncTasks)
             .set({
               progress: aiStatus.progress,
             })

@@ -24,8 +24,8 @@ export interface TaskStatus {
 }
 
 export class AIProviderManager {
-  private heygenClient: HeyGenClient;
-  private didClient: DIDClient;
+  private heygenClient?: HeyGenClient;
+  private didClient?: DIDClient;
 
   constructor() {
     try {
@@ -77,7 +77,7 @@ export class AIProviderManager {
         
         // If this is the last provider, throw the error
         if (provider === providers[providers.length - 1]) {
-          throw new Error(`All providers failed. Last error: ${error.message}`);
+          throw new Error(`All providers failed. Last error: ${error instanceof Error ? error.message : String(error)}`);
         }
         
         console.log(`Trying next provider...`);
@@ -93,8 +93,8 @@ export class AIProviderManager {
    */
   async getTaskStatus(taskId: string, provider: 'heygen' | 'did'): Promise<TaskStatus> {
     try {
-      let client: HeyGenClient | DIDClient;
-      
+      let client: HeyGenClient | DIDClient | undefined;
+
       if (provider === 'heygen') {
         client = this.heygenClient;
       } else {

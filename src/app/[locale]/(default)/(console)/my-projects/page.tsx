@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { getUserUuid } from "@/services/user";
 import { db } from "@/db";
 import { projects } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import moment from "moment";
 
 export default async function MyProjectsPage() {
@@ -18,11 +18,13 @@ export default async function MyProjectsPage() {
   }
 
   // Get user's LipSync projects
-  const data = await db.query.projects.findMany({
-    where: eq(projects.user_uuid, user_uuid),
-    orderBy: (projects, { desc }) => [desc(projects.created_at)],
-    limit: 100
-  });
+  const database = db();
+  const data = await database
+    .select()
+    .from(projects)
+    .where(eq(projects.user_uuid, user_uuid))
+    .orderBy(desc(projects.created_at))
+    .limit(100);
 
   const table: TableSlotType = {
     title: "My LipSync Projects",
@@ -48,16 +50,16 @@ export default async function MyProjectsPage() {
         title: "Status",
         name: "status",
         callback: (v: any) => {
-          const statusColors = {
+          const statusColors: Record<string, string> = {
             pending: "text-yellow-600",
-            processing: "text-blue-600", 
+            processing: "text-blue-600",
             completed: "text-green-600",
             failed: "text-red-600"
           };
-          const statusLabels = {
+          const statusLabels: Record<string, string> = {
             pending: "Pending",
             processing: "Processing",
-            completed: "Completed", 
+            completed: "Completed",
             failed: "Failed"
           };
           return `<span class="${statusColors[v.status] || 'text-gray-600'}">${statusLabels[v.status] || v.status}</span>`;
