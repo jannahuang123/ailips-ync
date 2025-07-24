@@ -1,6 +1,6 @@
-# LipSyncVideo.net
+# ShipAny Template One
 
-AI-Powered Lip Sync Video Generator - Ship Any AI SaaS Startups in hours.
+Ship Any AI SaaS Startups in hours.
 
 ![preview](preview.png)
 

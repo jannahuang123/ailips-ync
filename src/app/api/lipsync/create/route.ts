@@ -11,6 +11,7 @@ import { authOptions } from '@/auth/config';
 import { db } from '@/db';
 import { projects, lipsyncTasks, users } from '@/db/schema';
 import { getAIProviderManager } from '@/lib/ai/provider-manager';
+import { getUserCredits, decreaseCredits, CreditsTransType } from '@/services/credit';
 import { v4 as uuidv4 } from 'uuid';
 import { eq } from 'drizzle-orm';
 
@@ -52,25 +53,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check user credits (if needed)
-    const [user] = await db()
-      .select()
-      .from(users)
-      .where(eq(users.uuid, session.user.uuid))
-      .limit(1);
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'User not found' },
-        { status: 404 }
-      );
-    }
+    // Check user credits using ShipAny credit system
+    const userCredits = await getUserCredits(session.user.uuid);
 
     // Calculate credits needed based on quality
     const creditsNeeded = calculateCreditsNeeded(quality);
-    
-    // For now, we'll skip credit checking in development
-    // TODO: Implement proper credit system
+
+    // Check if user has enough credits
+    if (userCredits.left_credits < creditsNeeded) {
+      return NextResponse.json(
+        {
+          error: 'Insufficient credits',
+          required: creditsNeeded,
+          available: userCredits.left_credits,
+          message: 'Please purchase more credits to continue'
+        },
+        { status: 402 } // Payment Required
+      );
+    }
     
     // Generate project UUID
     const projectUuid = uuidv4();
@@ -126,7 +126,15 @@ export async function POST(request: NextRequest) {
         })
         .where(eq(lipsyncTasks.project_uuid, projectUuid));
 
-      console.log(`Project ${projectUuid} created and processing started with ${result.provider}`);
+      // Deduct credits using ShipAny credit system with LipSync specific type
+      const transType = getLipSyncTransType(quality);
+      await decreaseCredits({
+        user_uuid: session.user.uuid,
+        trans_type: transType,
+        credits: creditsNeeded
+      });
+
+      console.log(`Project ${projectUuid} created and processing started with ${result.provider}, ${creditsNeeded} credits deducted`);
 
       return NextResponse.json({
         success: true,
@@ -134,6 +142,8 @@ export async function POST(request: NextRequest) {
         status: 'processing',
         provider: result.provider,
         estimatedTime: result.estimatedTime,
+        creditsUsed: creditsNeeded,
+        creditsRemaining: userCredits.left_credits - creditsNeeded,
         message: 'Project created successfully and processing started'
       });
 
@@ -193,17 +203,38 @@ function isValidUrl(url: string): boolean {
 
 /**
  * Calculate credits needed based on quality
+ * Following ShipAny credit system standards
  */
 function calculateCreditsNeeded(quality: string): number {
   switch (quality) {
     case 'low':
-      return 1;
+      return 5;   // Low quality lip sync
     case 'medium':
-      return 2;
+      return 10;  // Medium quality lip sync
     case 'high':
-      return 3;
+      return 20;  // High quality lip sync
+    case 'ultra':
+      return 30;  // Ultra quality lip sync
     default:
-      return 2;
+      return 10;  // Default to medium
+  }
+}
+
+/**
+ * Get LipSync transaction type based on quality
+ */
+function getLipSyncTransType(quality: string): CreditsTransType {
+  switch (quality) {
+    case 'low':
+      return CreditsTransType.LipSyncLow;
+    case 'medium':
+      return CreditsTransType.LipSyncMedium;
+    case 'high':
+      return CreditsTransType.LipSyncHigh;
+    case 'ultra':
+      return CreditsTransType.LipSyncUltra;
+    default:
+      return CreditsTransType.LipSyncMedium;
   }
 }
 

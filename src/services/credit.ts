@@ -15,11 +15,19 @@ export enum CreditsTransType {
   OrderPay = "order_pay", // user pay for credits
   SystemAdd = "system_add", // system add credits
   Ping = "ping", // cost for ping api
+  LipSyncLow = "lipsync_low", // cost for low quality lip sync
+  LipSyncMedium = "lipsync_medium", // cost for medium quality lip sync
+  LipSyncHigh = "lipsync_high", // cost for high quality lip sync
+  LipSyncUltra = "lipsync_ultra", // cost for ultra quality lip sync
 }
 
 export enum CreditsAmount {
-  NewUserGet = 10,
+  NewUserGet = 50, // Increased for LipSync users
   PingCost = 1,
+  LipSyncLowCost = 5,
+  LipSyncMediumCost = 10,
+  LipSyncHighCost = 20,
+  LipSyncUltraCost = 30,
 }
 
 export async function getUserCredits(user_uuid: string): Promise<UserCredits> {
