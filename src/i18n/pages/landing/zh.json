@@ -118,35 +118,35 @@
   },
   "introduce": {
     "name": "introduce",
-    "title": "什么是 ShipAny",
+    "title": "什么是 LipSyncVideo",
     "label": "介绍",
-    "description": "ShipAny 是一个用于构建 AI SaaS 创业项目的 NextJS 模板，内置多种模板和组件。",
+    "description": "LipSyncVideo 是一个基于人工智能的专业唇语同步视频生成平台，采用前沿 AI 技术和直观工具构建。",
     "image": {
       "src": "/imgs/features/1.png"
     },
     "items": [
       {
-        "title": "即用型模板",
-        "description": "从数十个生产就绪的 AI SaaS 模板中选择，快速启动您的项目。",
-        "icon": "RiNextjsFill"
+        "title": "AI 驱动技术",
+        "description": "利用 HeyGen 先进的 AI 模型实现精确的唇语同步和自然的面部动作。",
+        "icon": "RiRobot2Line"
       },
       {
-        "title": "基础设施配置",
-        "description": "立即获取内置最佳实践的可扩展基础设施。",
-        "icon": "RiDatabase2Line"
+        "title": "专业品质",
+        "description": "生成好莱坞级别的唇语同步视频，支持高清和 4K 分辨率。",
+        "icon": "RiHdLine"
       },
       {
-        "title": "快速部署",
-        "description": "在几小时内将您的 AI SaaS 应用部署到生产环境，而不是几天。",
-        "icon": "RiCloudyFill"
+        "title": "快速处理",
+        "description": "通过我们优化的 AI 处理管道，几分钟内获得您的唇语同步视频。",
+        "icon": "RiTimeLine"
       }
     ]
   },
   "benefit": {
     "name": "benefit",
-    "title": "为什么选择 ShipAny",
+    "title": "为什么选择 LipSyncVideo",
     "label": "优势",
-    "description": "获取启动 AI 创业所需的一切 - 从即用型模板到技术支持。",
+    "description": "获取专业视频唇语同步所需的一切 - 从先进的 AI 技术到企业级安全保障。",
     "items": [
       {
         "title": "完整框架",
@@ -176,8 +176,8 @@
   },
   "usage": {
     "name": "usage",
-    "title": "如何使用 ShipAny 启动项目",
-    "description": "通过三个简单步骤启动您的 AI SaaS 创业项目：",
+    "title": "如何创建唇语同步视频",
+    "description": "通过三个简单步骤获得您的专业唇语同步视频：",
     "image": {
       "src": "/imgs/features/1.png"
     },
@@ -185,29 +185,29 @@
     "text_align": "center",
     "items": [
       {
-        "title": "获取 ShipAny",
-        "description": "一次性付款购买 ShipAny。查收邮件获取代码和文档。",
+        "title": "上传您的文件",
+        "description": "上传您的视频和音频文件。我们支持所有主要格式，包括 MP4、MOV、MP3 和 WAV。",
         "image": {
           "src": "/imgs/features/5.png"
         }
       },
       {
-        "title": "开始您的项目",
-        "description": "阅读文档并克隆 ShipAny 代码。开始构建您的 AI SaaS 创业项目。",
+        "title": "AI 处理",
+        "description": "我们的先进 AI 分析您的内容，创建完美的唇语同步和自然的面部动作。",
         "image": {
           "src": "/imgs/features/6.png"
         }
       },
       {
-        "title": "定制您的项目",
-        "description": "使用您的数据和内容修改模板。满足特定的 AI 功能需求。",
+        "title": "下载结果",
+        "description": "几分钟内获得您的专业唇语同步视频。支持高清和 4K 质量。",
         "image": {
           "src": "/imgs/features/7.png"
         }
       },
       {
-        "title": "部署到生产环境",
-        "description": "通过几个步骤将项目部署到生产环境，立即开始服务客户。",
+        "title": "分享和使用",
+        "description": "立即使用您的唇语同步视频进行营销、教育或娱乐用途。",
         "image": {
           "src": "/imgs/features/8.png"
         }
@@ -278,8 +278,8 @@
   "testimonial": {
     "name": "testimonial",
     "label": "用户评价",
-    "title": "用户如何评价 ShipAny",
-    "description": "听听使用 ShipAny 启动 AI 创业项目的开发者和创始人怎么说。",
+    "title": "创作者如何评价 LipSyncVideo",
+    "description": "听听使用我们 AI 唇语同步技术的内容创作者、电影制作人和企业用户怎么说。",
     "icon": "GoThumbsup",
     "items": [
       {
