@@ -118,56 +118,56 @@
   },
   "introduce": {
     "name": "introduce",
-    "title": "What is ShipAny",
+    "title": "What is LipSyncVideo",
     "label": "Introduce",
-    "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Built in a variety of templates and components.",
+    "description": "LipSyncVideo is an AI-powered platform for creating professional lip-synced videos. Built with cutting-edge AI technology and intuitive tools.",
     "image": {
       "src": "/imgs/features/1.png"
     },
     "items": [
       {
-        "title": "Ready-to-use Templates",
-        "description": "Choose from dozens of production-ready AI SaaS templates to quickly start your project.",
-        "icon": "RiNextjsFill"
+        "title": "AI-Powered Technology",
+        "description": "Leverage HeyGen's advanced AI models for precise lip synchronization and natural facial movements.",
+        "icon": "RiRobot2Line"
       },
       {
-        "title": "Infrastructure Setup",
-        "description": "Get instant access to scalable infrastructure with best practices built-in.",
-        "icon": "RiDatabase2Line"
+        "title": "Professional Quality",
+        "description": "Generate Hollywood-quality lip-synced videos with support for HD and 4K resolution.",
+        "icon": "RiHdLine"
       },
       {
-        "title": "Quick Deployment",
-        "description": "Deploy your AI SaaS application to production in hours, not days.",
-        "icon": "RiCloudyFill"
+        "title": "Fast Processing",
+        "description": "Get your lip-synced videos ready in minutes with our optimized AI processing pipeline.",
+        "icon": "RiTimeLine"
       }
     ]
   },
   "benefit": {
     "name": "benefit",
-    "title": "Why Choose ShipAny",
+    "title": "Why Choose LipSyncVideo",
     "label": "Benefits",
-    "description": "Get everything you need to launch your AI startup - from ready-to-use templates to technical support.",
+    "description": "Get everything you need for professional video lip synchronization - from advanced AI technology to enterprise-grade security.",
     "items": [
       {
-        "title": "Complete Framework",
-        "description": "Built on Next.js with authentication, payments, and AI integration - everything works out of the box.",
-        "icon": "RiNextjsFill",
+        "title": "Advanced AI Engine",
+        "description": "Powered by HeyGen's cutting-edge AI technology with 99% accuracy rate for natural lip synchronization.",
+        "icon": "RiRobot2Line",
         "image": {
           "src": "/imgs/features/2.png"
         }
       },
       {
-        "title": "Rich Templates Library",
-        "description": "Choose from various AI SaaS templates to kickstart your project - chatbots, image generation, and more.",
-        "icon": "RiClapperboardAiLine",
+        "title": "Multi-Format Support",
+        "description": "Support for all major video and audio formats with automatic optimization for best results.",
+        "icon": "RiVideoLine",
         "image": {
           "src": "/imgs/features/3.png"
         }
       },
       {
-        "title": "Technical Guidance",
-        "description": "Get dedicated support and join our developer community to ensure your successful launch.",
-        "icon": "RiCodeFill",
+        "title": "Enterprise Security",
+        "description": "Bank-level security with encrypted processing, automatic file deletion, and GDPR compliance.",
+        "icon": "RiShieldCheckLine",
         "image": {
           "src": "/imgs/features/4.png"
         }
@@ -176,8 +176,8 @@
   },
   "usage": {
     "name": "usage",
-    "title": "How to Launch with ShipAny",
-    "description": "Get your AI SaaS startup running in three simple steps:",
+    "title": "How to Create Lip Sync Videos",
+    "description": "Get your professional lip-synced videos in three simple steps:",
     "image": {
       "src": "/imgs/features/1.png"
     },
@@ -185,22 +185,22 @@
     "text_align": "center",
     "items": [
       {
-        "title": "Get ShipAny",
-        "description": "Buy ShipAny with a one-time payment. Check your email for the code and documentation.",
+        "title": "Upload Your Files",
+        "description": "Upload your video and audio files. We support all major formats including MP4, MOV, MP3, and WAV.",
         "image": {
           "src": "/imgs/features/5.png"
         }
       },
       {
-        "title": "Start Your Project",
-        "description": "Read the documentation and clone the code of ShipAny. Start building your AI SaaS startup.",
+        "title": "AI Processing",
+        "description": "Our advanced AI analyzes your content and creates perfect lip synchronization with natural facial movements.",
         "image": {
           "src": "/imgs/features/6.png"
         }
       },
       {
-        "title": "Customize Your Project",
-        "description": "Modify the template with your data and contents. Specific AI functionality needs.",
+        "title": "Download Results",
+        "description": "Get your professional lip-synced video in minutes. Available in HD and 4K quality.",
         "image": {
           "src": "/imgs/features/7.png"
         }
@@ -324,8 +324,8 @@
       },
       {
         "title": "Anna Zhang",
-        "label": "Startup Founder",
-        "description": "From idea to launch in 3 days! ShipAny's templates and deployment tools made it possible to test our AI business concept incredibly fast.",
+        "label": "Tech Startup Founder",
+        "description": "Incredible results! LipSyncVideo helped us create multilingual product demos in hours instead of weeks. The AI quality is outstanding.",
         "image": {
           "src": "/imgs/users/6.png"
         }
@@ -386,15 +386,15 @@
   "footer": {
     "name": "footer",
     "brand": {
-      "title": "ShipAny",
-      "description": "ShipAny is a NextJS boilerplate for building AI SaaS startups. Ship Fast with a variety of templates and components.",
+      "title": "LipSyncVideo",
+      "description": "LipSyncVideo is an AI-powered platform for creating professional lip-synced videos. Transform your content with cutting-edge AI technology.",
       "logo": {
-        "src": "/logo.png",
-        "alt": "ShipAny"
+        "src": "/lipsync-logo.png",
+        "alt": "LipSyncVideo"
       },
       "url": "/"
     },
-    "copyright": "© 2025 • ShipAny All rights reserved.",
+    "copyright": "© 2025 • LipSyncVideo All rights reserved.",
     "nav": {
       "items": [
         {
@@ -421,19 +421,19 @@
           "title": "Resources",
           "children": [
             {
-              "title": "Documents",
-              "url": "https://docs.shipany.ai",
-              "target": "_blank"
+              "title": "API Documentation",
+              "url": "/docs",
+              "target": "_self"
             },
             {
-              "title": "Components",
-              "url": "https://shipany.ai/components",
-              "target": "_blank"
+              "title": "Video Tutorials",
+              "url": "/tutorials",
+              "target": "_self"
             },
             {
-              "title": "Templates",
-              "url": "https://shipany.ai/templates",
-              "target": "_blank"
+              "title": "Best Practices",
+              "url": "/guides",
+              "target": "_self"
             }
           ]
         },
@@ -464,25 +464,25 @@
         {
           "title": "X",
           "icon": "RiTwitterXFill",
-          "url": "https://x.com/shipanyai",
+          "url": "https://x.com/lipsyncvideo",
           "target": "_blank"
         },
         {
           "title": "Github",
           "icon": "RiGithubFill",
-          "url": "https://github.com/shipanyai",
+          "url": "https://github.com/lipsyncvideo",
           "target": "_blank"
         },
         {
           "title": "Discord",
           "icon": "RiDiscordFill",
-          "url": "https://discord.gg/HQNnrzjZQS",
+          "url": "https://discord.gg/lipsyncvideo",
           "target": "_blank"
         },
         {
           "title": "Email",
           "icon": "RiMailLine",
-          "url": "mailto:support@shipany.ai",
+          "url": "mailto:support@lipsyncvideo.net",
           "target": "_self"
         }
       ]

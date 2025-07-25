@@ -3,10 +3,10 @@
   "theme": "light",
   "header": {
     "brand": {
-      "title": "ShipAny",
+      "title": "LipSyncVideo",
       "logo": {
-        "src": "/logo.png",
-        "alt": "ShipAny"
+        "src": "/lipsync-logo.png",
+        "alt": "LipSyncVideo"
       },
       "url": "/"
     },
