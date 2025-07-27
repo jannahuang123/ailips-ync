@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 import LipSyncEditor from "./LipSyncEditor";
 
 interface LipSyncEditorWrapperProps {
@@ -45,15 +46,33 @@ export default function LipSyncEditorWrapper({ userCredits: initialCredits }: Li
 
   const handleGenerate = (data: any) => {
     console.log("Generated:", data);
+
+    // Show success message with result
+    if (data.resultUrl) {
+      toast.success(
+        <div>
+          <p>Video generated successfully!</p>
+          <a
+            href={data.resultUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary underline"
+          >
+            Download Video
+          </a>
+        </div>
+      );
+    }
+
     // Refresh credits after generation
     if (session?.user) {
       fetchUserCredits();
     }
-    // Here you can add more logic like:
-    // - Show success message
-    // - Redirect to project page
-    // - Update UI state
+
+    // Additional logic:
     // - Track analytics
+    // - Update project list
+    // - Show project in user dashboard
   };
 
   return (

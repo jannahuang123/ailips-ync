@@ -111,8 +111,8 @@ export class AIProviderManager {
         throw new Error(`${provider} client is not available`);
       }
 
-      if (provider === 'heygen') {
-        const status = await (client as HeyGenClient).getTaskStatus(taskId);
+      if (provider === 'veo3') {
+        const status = await (client as Veo3Client).getTaskStatus(taskId);
         return {
           taskId,
           provider,
@@ -206,11 +206,11 @@ export class AIProviderManager {
   async getProvidersHealth(): Promise<Record<string, boolean>> {
     const health: Record<string, boolean> = {};
 
-    if (this.heygenClient) {
+    if (this.veo3Client) {
       try {
-        health.heygen = await this.heygenClient.isHealthy();
+        health.veo3 = await this.veo3Client.isHealthy();
       } catch (error) {
-        health.heygen = false;
+        health.veo3 = false;
       }
     }
 

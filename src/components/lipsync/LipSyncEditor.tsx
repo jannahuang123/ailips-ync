@@ -133,56 +133,156 @@ export default function LipSyncEditor({ userCredits = 50, onGenerate, loading = 
     setIsGenerating(true);
     setProgress(0);
 
-    // Simulate generation progress
-    const progressInterval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 90) {
-          clearInterval(progressInterval);
-          return 90;
-        }
-        return prev + 10; // Fixed increment instead of random
-      });
-    }, 500);
-
     try {
-      // Call generation API
-      const formData = new FormData();
-      formData.append('file', uploadedFile);
-      formData.append('audioMode', audioInputMode);
-      formData.append('voice', selectedVoice);
-      formData.append('type', activeTab);
-      formData.append('subtitles', enableSubtitles.toString());
+      // Step 1: Upload the file first
+      toast.info("Uploading file...");
+      const uploadFormData = new FormData();
+      uploadFormData.append('file', uploadedFile);
 
-      // Add audio content based on mode
+      const uploadEndpoint = activeTab === 'photo' ? '/api/upload/image' : '/api/upload/video';
+      const uploadResponse = await fetch(uploadEndpoint, {
+        method: 'POST',
+        body: uploadFormData
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error('File upload failed');
+      }
+
+      const { url: fileUrl } = await uploadResponse.json();
+      setProgress(20);
+
+      // Step 2: Handle audio based on mode
+      let audioUrl = '';
+
       if (audioInputMode === "text") {
-        formData.append('text', scriptText);
+        // Generate audio using TTS
+        toast.info("Converting text to speech...");
+        const ttsResponse = await fetch('/api/tts/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: scriptText,
+            voice: selectedVoice,
+            format: 'mp3'
+          })
+        });
+
+        if (!ttsResponse.ok) {
+          throw new Error('Text-to-speech generation failed');
+        }
+
+        const ttsResult = await ttsResponse.json();
+        audioUrl = ttsResult.audioUrl;
       } else if (audioInputMode === "upload" && uploadedAudio) {
-        formData.append('audioFile', uploadedAudio);
+        // Upload audio file
+        const audioFormData = new FormData();
+        audioFormData.append('file', uploadedAudio);
+
+        const audioUploadResponse = await fetch('/api/upload/audio', {
+          method: 'POST',
+          body: audioFormData
+        });
+
+        if (!audioUploadResponse.ok) {
+          throw new Error('Audio upload failed');
+        }
+
+        const audioResult = await audioUploadResponse.json();
+        audioUrl = audioResult.url;
       } else if (audioInputMode === "record") {
-        formData.append('recordedText', recordedText);
+        // For recorded audio, use the transcribed text with TTS
+        const ttsResponse = await fetch('/api/tts/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            text: recordedText,
+            voice: selectedVoice,
+            format: 'mp3'
+          })
+        });
+
+        if (!ttsResponse.ok) {
+          throw new Error('Text-to-speech generation failed');
+        }
+
+        const ttsResult = await ttsResponse.json();
+        audioUrl = ttsResult.audioUrl;
       }
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 3000));
-      
-      setProgress(100);
-      toast.success("Video generated successfully!");
-      
-      if (onGenerate) {
-        onGenerate({
-          file: uploadedFile,
-          text: scriptText,
-          voice: selectedVoice,
-          type: activeTab,
-          subtitles: enableSubtitles
-        });
+      setProgress(40);
+
+      // Step 3: Create LipSync project
+      toast.info("Starting AI processing...");
+      const projectResponse = await fetch('/api/lipsync/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `LipSync ${Date.now()}`,
+          imageUrl: fileUrl,  // For photos, use imageUrl
+          audioUrl: audioUrl,
+          quality: 'medium'   // Fixed medium quality for 10 credits
+        })
+      });
+
+      if (!projectResponse.ok) {
+        const errorData = await projectResponse.json();
+        throw new Error(errorData.error || 'Failed to create project');
       }
+
+      const projectResult = await projectResponse.json();
+      setProgress(60);
+
+      // Step 4: Poll for completion
+      toast.info("Processing video... This may take a few minutes.");
+      const projectId = projectResult.projectId;
+
+      const pollStatus = async (): Promise<void> => {
+        const statusResponse = await fetch(`/api/lipsync/status/${projectId}`);
+
+        if (!statusResponse.ok) {
+          throw new Error('Failed to check status');
+        }
+
+        const statusData = await statusResponse.json();
+
+        if (statusData.status === 'completed') {
+          setProgress(100);
+          toast.success("Video generated successfully!");
+
+          // Call onGenerate callback with result
+          if (onGenerate) {
+            onGenerate({
+              projectId,
+              resultUrl: statusData.resultUrl,
+              file: uploadedFile,
+              audioMode: audioInputMode,
+              text: audioInputMode === "text" ? scriptText : recordedText,
+              voice: selectedVoice,
+              type: activeTab,
+              subtitles: enableSubtitles
+            });
+          }
+
+          setIsGenerating(false);
+          setTimeout(() => setProgress(0), 3000);
+        } else if (statusData.status === 'failed') {
+          throw new Error(statusData.error || 'Video generation failed');
+        } else {
+          // Still processing, update progress
+          setProgress(60 + (statusData.progress || 0) * 0.4);
+          setTimeout(pollStatus, 3000); // Poll every 3 seconds
+        }
+      };
+
+      // Start polling
+      setTimeout(pollStatus, 2000);
+
     } catch (error) {
-      toast.error("Generation failed. Please try again.");
-    } finally {
-      clearInterval(progressInterval);
+      console.error("Generation failed:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to generate video. Please try again.");
       setIsGenerating(false);
-      setTimeout(() => setProgress(0), 2000);
+      setProgress(0);
     }
   };
 
