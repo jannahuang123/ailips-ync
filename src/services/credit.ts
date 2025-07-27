@@ -22,8 +22,12 @@ export enum CreditsTransType {
 }
 
 export enum CreditsAmount {
-  NewUserGet = 50, // Increased for LipSync users
+  NewUserGet = 10, // Adjusted for Veo3 cost (1 free video)
   PingCost = 1,
+  Veo3StandardCost = 10, // $0.50 per video (1 RMB ≈ $0.14 + margin)
+  Veo3PremiumCost = 15,  // Premium features + priority queue
+  Veo3UltraCost = 20,    // Ultra quality + advanced features
+  // Legacy costs for backward compatibility
   LipSyncLowCost = 5,
   LipSyncMediumCost = 10,
   LipSyncHighCost = 20,

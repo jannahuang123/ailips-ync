@@ -1,9 +1,43 @@
-# 🎬 LipSyncVideo.net 开发指南
+# 🚀 LipSyncVideo.net Development Guide
 
-> **基于 ShipAny Template One 的 AI 视频唇语同步 SaaS 开发方案**  
-> 📅 **创建时间**: 2024年1月  
-> 🎯 **目标**: 2-3周完成MVP，充分复用现有架构  
-> ⚠️ **核心原则**: 不改变大框架，专注AI服务集成
+> **AI-Powered Lip Sync Video Platform Based on ShipAny Template One**
+> 📅 **Created**: January 2025
+> 🎯 **Goal**: Complete MVP in 7 days, Launch in 14 days
+> ⚠️ **Core Principle**: Maximize ShipAny template reuse, focus on AI integration
+
+## 🎯 **Core User Scenarios**
+
+### **Two Primary Use Cases**
+```typescript
+const USER_SCENARIOS = {
+  photoToSpeech: {
+    name: "Photo to Speech",
+    icon: "📸💬",
+    description: "Upload a photo and make it speak",
+    userStory: "I have a photo and want it to say something",
+    credits: 5,
+    popular: true
+  },
+
+  videoRevoice: {
+    name: "Video Revoicing",
+    icon: "🎬💬",
+    description: "Replace audio in existing video",
+    userStory: "I have a video and want to change the speech",
+    credits: 5,
+    professional: true
+  }
+}
+```
+
+## 🏗️ **ShipAny Template Utilization (90%+ Reuse)**
+
+### **Direct Reuse Components**
+- ✅ **UI Components**: Card, Button, Input, Progress, Tabs (100% reuse)
+- ✅ **Payment System**: Stripe integration and credit system (95% reuse)
+- ✅ **Authentication**: NextAuth.js complete system (100% reuse)
+- ✅ **Form System**: Form components and validation (90% reuse)
+- ✅ **File Upload**: Existing upload API (80% reuse)
 
 ## 📋 **快速导航**
 

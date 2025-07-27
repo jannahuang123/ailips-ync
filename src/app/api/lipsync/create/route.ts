@@ -17,7 +17,7 @@ import { eq } from 'drizzle-orm';
 
 interface CreateProjectRequest {
   name: string;
-  videoUrl: string;
+  imageUrl: string;  // Changed from videoUrl to imageUrl for Veo3
   audioUrl: string;
   quality?: 'low' | 'medium' | 'high';
 }
@@ -35,20 +35,20 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json() as CreateProjectRequest;
-    const { name, videoUrl, audioUrl, quality = 'medium' } = body;
+    const { name, imageUrl, audioUrl, quality = 'medium' } = body;
 
     // Validate required fields
-    if (!name || !videoUrl || !audioUrl) {
+    if (!name || !imageUrl || !audioUrl) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, videoUrl, audioUrl' },
+        { error: 'Missing required fields: name, imageUrl, audioUrl' },
         { status: 400 }
       );
     }
 
     // Validate URLs
-    if (!isValidUrl(videoUrl) || !isValidUrl(audioUrl)) {
+    if (!isValidUrl(imageUrl) || !isValidUrl(audioUrl)) {
       return NextResponse.json(
-        { error: 'Invalid video or audio URL format' },
+        { error: 'Invalid image or audio URL format' },
         { status: 400 }
       );
     }
@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       user_uuid: session.user.uuid,
       name,
       status: 'pending',
-      video_url: videoUrl,
+      video_url: imageUrl,  // Store image URL in video_url field for compatibility
       audio_url: audioUrl,
       quality,
       credits_consumed: creditsNeeded,
@@ -102,9 +102,9 @@ export async function POST(request: NextRequest) {
       // Initialize AI provider manager
       const aiManager = getAIProviderManager();
 
-      // Start AI processing
+      // Start AI processing with Veo3
       const result = await aiManager.processLipSync({
-        videoUrl,
+        imageUrl,  // Use imageUrl for Veo3
         audioUrl,
         quality
       });
@@ -204,20 +204,20 @@ function isValidUrl(url: string): boolean {
 
 /**
  * Calculate credits needed based on quality
- * Following ShipAny credit system standards
+ * Veo3 is more cost-effective than traditional methods
  */
 function calculateCreditsNeeded(quality: string): number {
   switch (quality) {
     case 'low':
-      return 5;   // Low quality lip sync
+      return 4;   // Veo3 standard quality (20% less than traditional)
     case 'medium':
-      return 10;  // Medium quality lip sync
+      return 8;   // Veo3 HD quality (20% less than traditional)
     case 'high':
-      return 20;  // High quality lip sync
+      return 12;  // Veo3 4K quality (40% less than traditional)
     case 'ultra':
-      return 30;  // Ultra quality lip sync
+      return 15;  // Veo3 4K+ quality (50% less than traditional)
     default:
-      return 10;  // Default to medium
+      return 8;   // Default to medium
   }
 }
 

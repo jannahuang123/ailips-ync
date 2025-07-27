@@ -9,7 +9,7 @@ export default function Footer({ footer }: { footer: FooterType }) {
   return (
     <section id={footer.name} className="py-16">
       <div className="max-w-7xl mx-auto px-8">
-        <footer>
+        <footer suppressHydrationWarning>
           <div className="flex flex-col items-center justify-between gap-10 text-center lg:flex-row lg:text-left">
             <div className="flex w-full max-w-96 shrink flex-col items-center justify-between gap-6 lg:items-start">
               {footer.brand && (

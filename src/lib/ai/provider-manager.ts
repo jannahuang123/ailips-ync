@@ -5,18 +5,18 @@
  * It tries HeyGen first, then falls back to D-ID if needed.
  */
 
-import { getHeyGenClient, HeyGenClient, LipSyncParams } from './heygen-client';
+import { getVeo3Client, Veo3Client, LipSyncParams, adaptLipSyncParams } from './veo3-client';
 import { getDIDClient, DIDClient } from './did-client';
 
 export interface ProcessResult {
   taskId: string;
-  provider: 'heygen' | 'did';
+  provider: 'veo3' | 'did';
   estimatedTime: string;
 }
 
 export interface TaskStatus {
   taskId: string;
-  provider: 'heygen' | 'did';
+  provider: 'veo3' | 'did';
   status: string;
   progress: number;
   resultUrl?: string;
@@ -24,14 +24,14 @@ export interface TaskStatus {
 }
 
 export class AIProviderManager {
-  private heygenClient?: HeyGenClient;
+  private veo3Client?: Veo3Client;
   private didClient?: DIDClient;
 
   constructor() {
     try {
-      this.heygenClient = getHeyGenClient();
+      this.veo3Client = getVeo3Client();
     } catch (error) {
-      console.warn('HeyGen client initialization failed:', error);
+      console.warn('Veo3 client initialization failed:', error);
     }
 
     try {
@@ -40,7 +40,7 @@ export class AIProviderManager {
       console.warn('D-ID client initialization failed:', error);
     }
 
-    if (!this.heygenClient && !this.didClient) {
+    if (!this.veo3Client && !this.didClient) {
       throw new Error('No AI providers are available. Please check your API keys.');
     }
   }
@@ -50,20 +50,26 @@ export class AIProviderManager {
    */
   async processLipSync(params: LipSyncParams): Promise<ProcessResult> {
     const providers = this.getAvailableProviders();
-    
+
     for (const provider of providers) {
       try {
         console.log(`Attempting to process with ${provider.name}...`);
-        
+
         // Check if provider is healthy
         if (!(await provider.client.isHealthy())) {
           console.warn(`${provider.name} is not healthy, trying next provider...`);
           continue;
         }
 
-        // Create task
-        const taskId = await provider.client.createLipSyncTask(params);
-        
+        // Create task - adapt params for Veo3 if needed
+        let taskId: string | null;
+        if (provider.type === 'veo3') {
+          const veo3Params = adaptLipSyncParams(params);
+          taskId = await (provider.client as Veo3Client).createLipSyncTask(veo3Params);
+        } else {
+          taskId = await provider.client.createLipSyncTask(params);
+        }
+
         if (taskId) {
           console.log(`Successfully created task with ${provider.name}: ${taskId}`);
           return {
@@ -91,12 +97,12 @@ export class AIProviderManager {
   /**
    * Get task status from the appropriate provider
    */
-  async getTaskStatus(taskId: string, provider: 'heygen' | 'did'): Promise<TaskStatus> {
+  async getTaskStatus(taskId: string, provider: 'veo3' | 'did'): Promise<TaskStatus> {
     try {
-      let client: HeyGenClient | DIDClient | undefined;
+      let client: Veo3Client | DIDClient | undefined;
 
-      if (provider === 'heygen') {
-        client = this.heygenClient;
+      if (provider === 'veo3') {
+        client = this.veo3Client;
       } else {
         client = this.didClient;
       }
@@ -138,12 +144,12 @@ export class AIProviderManager {
   private getAvailableProviders() {
     const providers = [];
 
-    // HeyGen is the primary provider
-    if (this.heygenClient) {
+    // Veo3 is the primary provider (faster and more cost-effective)
+    if (this.veo3Client) {
       providers.push({
-        client: this.heygenClient,
-        type: 'heygen' as const,
-        name: 'HeyGen'
+        client: this.veo3Client,
+        type: 'veo3' as const,
+        name: 'Veo3'
       });
     }
 
@@ -162,10 +168,10 @@ export class AIProviderManager {
   /**
    * Get estimated processing time based on provider
    */
-  private getEstimatedTime(provider: 'heygen' | 'did'): string {
+  private getEstimatedTime(provider: 'veo3' | 'did'): string {
     switch (provider) {
-      case 'heygen':
-        return '2-5 minutes';
+      case 'veo3':
+        return '2-3 minutes';  // Veo3 is faster
       case 'did':
         return '3-7 minutes';
       default:
