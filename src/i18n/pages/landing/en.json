@@ -5,7 +5,7 @@
     "brand": {
       "title": "LipSyncVideo",
       "logo": {
-        "src": "/lipsync-logo.png",
+        "src": "/logo.png",
         "alt": "LipSyncVideo"
       },
       "url": "/"

@@ -18,6 +18,12 @@ export async function generateMetadata({
   setRequestLocale(locale);
 
   const t = await getTranslations();
+  const webUrl = process.env.NEXT_PUBLIC_WEB_URL || "https://ailips-ync.vercel.app";
+
+  // Generate canonical URL based on locale
+  const canonicalUrl = locale === "en"
+    ? webUrl
+    : `${webUrl}/${locale}`;
 
   return {
     title: {
@@ -26,6 +32,22 @@ export async function generateMetadata({
     },
     description: t("metadata.description") || "",
     keywords: t("metadata.keywords") || "",
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: t("metadata.title") || "",
+      description: t("metadata.description") || "",
+      url: canonicalUrl,
+      siteName: t("metadata.title") || "",
+      locale: locale,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t("metadata.title") || "",
+      description: t("metadata.description") || "",
+    },
   };
 }
 
