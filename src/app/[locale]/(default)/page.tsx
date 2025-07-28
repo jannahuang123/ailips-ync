@@ -11,7 +11,6 @@ import Showcase from "@/components/blocks/showcase";
 import Stats from "@/components/blocks/stats";
 import Testimonial from "@/components/blocks/testimonial";
 import LipSyncEditorWrapper from "@/components/lipsync/LipSyncEditorWrapper";
-import LipSyncEditorTest from "@/components/lipsync/LipSyncEditorTest";
 import { getLandingPage } from "@/services/page";
 
 export async function generateMetadata({
@@ -50,15 +49,16 @@ export default async function LandingPage({
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Try LipSync Video Generator
+              🎬 Try LipSync Video Generator
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Upload a photo or video and make it speak with AI-powered lip synchronization.
               Generate professional-quality talking videos in seconds.
             </p>
           </div>
-          <LipSyncEditorTest />
-          <LipSyncEditorWrapper />
+          <div className="flex justify-center">
+            <LipSyncEditorWrapper userCredits={50} />
+          </div>
         </div>
       </section>
 
