@@ -11,6 +11,7 @@ import Showcase from "@/components/blocks/showcase";
 import Stats from "@/components/blocks/stats";
 import Testimonial from "@/components/blocks/testimonial";
 import LipSyncEditorWrapper from "@/components/lipsync/LipSyncEditorWrapper";
+import LipSyncEditorTest from "@/components/lipsync/LipSyncEditorTest";
 import { getLandingPage } from "@/services/page";
 
 export async function generateMetadata({
@@ -56,6 +57,7 @@ export default async function LandingPage({
               Generate professional-quality talking videos in seconds.
             </p>
           </div>
+          <LipSyncEditorTest />
           <LipSyncEditorWrapper />
         </div>
       </section>
