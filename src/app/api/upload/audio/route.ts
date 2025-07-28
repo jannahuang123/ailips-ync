@@ -10,6 +10,8 @@ import { auth } from '@/auth';
 import { authOptions } from '@/auth/config';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
+import { writeFile, mkdir } from 'fs/promises';
+import path from 'path';
 
 // Supported audio formats
 const SUPPORTED_AUDIO_FORMATS = [
@@ -26,15 +28,27 @@ const SUPPORTED_AUDIO_FORMATS = [
 // Maximum file size (50MB)
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
-// Initialize S3 client
-const s3Client = new S3Client({
-  region: process.env.STORAGE_REGION || 'us-east-1',
-  credentials: {
-    accessKeyId: process.env.STORAGE_ACCESS_KEY!,
-    secretAccessKey: process.env.STORAGE_SECRET_KEY!,
-  },
-  endpoint: process.env.STORAGE_ENDPOINT,
-});
+// Initialize S3 client with validation
+function createS3Client() {
+  const endpoint = process.env.STORAGE_ENDPOINT;
+  const accessKey = process.env.STORAGE_ACCESS_KEY;
+  const secretKey = process.env.STORAGE_SECRET_KEY;
+  const region = process.env.STORAGE_REGION || 'auto';
+
+  if (!endpoint || !accessKey || !secretKey) {
+    console.warn('Storage configuration missing. Using fallback storage.');
+    return null;
+  }
+
+  return new S3Client({
+    region,
+    credentials: {
+      accessKeyId: accessKey,
+      secretAccessKey: secretKey,
+    },
+    endpoint,
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -88,22 +102,40 @@ export async function POST(request: NextRequest) {
     // Convert file to buffer
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    // Upload to S3
-    const uploadCommand = new PutObjectCommand({
-      Bucket: process.env.STORAGE_BUCKET!,
-      Key: key,
-      Body: buffer,
-      ContentType: file.type,
-      Metadata: {
-        userId: session.user.uuid,
-        originalName: file.name,
-        uploadedAt: new Date().toISOString(),
-      },
-    });
+    let fileUrl: string;
+    const s3Client = createS3Client();
 
-    await s3Client.send(uploadCommand);
+    if (s3Client && process.env.STORAGE_BUCKET) {
+      // Upload to S3/R2
+      const uploadCommand = new PutObjectCommand({
+        Bucket: process.env.STORAGE_BUCKET,
+        Key: key,
+        Body: buffer,
+        ContentType: file.type,
+        Metadata: {
+          userId: session.user.uuid,
+          originalName: file.name,
+          uploadedAt: new Date().toISOString(),
+        },
+      });
 
-    // Generate file URL
+      await s3Client.send(uploadCommand);
+      fileUrl = `${process.env.STORAGE_DOMAIN}/${key}`;
+    } else {
+      // Fallback to local storage
+      console.log('Using local storage fallback for audio');
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'audio');
+
+      // Ensure directory exists
+      await mkdir(uploadsDir, { recursive: true });
+
+      // Save file locally
+      const localPath = path.join(uploadsDir, fileName);
+      await writeFile(localPath, buffer);
+
+      // Generate public URL
+      fileUrl = `/uploads/audio/${fileName}`;
+    }
     const fileUrl = `${process.env.STORAGE_DOMAIN}/${key}`;
 
     console.log(`Audio uploaded successfully: ${fileUrl}`);
