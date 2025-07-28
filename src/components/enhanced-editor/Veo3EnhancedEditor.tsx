@@ -185,28 +185,32 @@ export default function Veo3EnhancedEditor({
     const config: Veo3GenerationConfig = {
       inputType,
       inputData: {
-        imageFile: inputType === 'image' ? imageFile : undefined,
-        videoFile: inputType === 'video' ? videoFile : undefined,
-        textPrompt: inputType === 'text' ? textPrompt : undefined,
+        imageFile: inputType === 'image' ? (imageFile || undefined) : undefined,
+        videoFile: inputType === 'video' ? (videoFile || undefined) : undefined,
+        textPrompt: inputType === 'text' ? (textPrompt || '') : '',
       },
-      audioData,
+      audioSettings: {
+        generateAudio: true,
+        audioPrompt: 'Generate natural speech',
+        voiceStyle: 'natural',
+        backgroundMusic: false,
+        soundEffects: false,
+      },
       settings: {
         quality,
         duration,
         aspectRatio,
-        lipSyncAccuracy,
-        backgroundRemoval,
-        faceEnhancement,
-        voiceCloning,
+        style: 'realistic',
+        cameraMovement: 'static',
+        lighting: 'natural',
       },
       estimatedCredits,
     };
 
     onGenerate(config);
   }, [
-    inputType, imageFile, videoFile, textPrompt, audioData, quality, duration,
-    aspectRatio, lipSyncAccuracy, backgroundRemoval, faceEnhancement, voiceCloning,
-    calculateCredits, userCredits, onGenerate
+    inputType, imageFile, videoFile, textPrompt, quality, duration,
+    aspectRatio, calculateCredits, userCredits, onGenerate
   ]);
 
   const resetEditor = useCallback(() => {
@@ -378,12 +382,17 @@ export default function Veo3EnhancedEditor({
             </CardContent>
           </Card>
 
-          {/* Audio Input */}
-          <AudioInputSelector 
-            onAudioSelect={setAudioData}
-            maxDuration={60}
-            supportedFormats={['mp3', 'wav', 'm4a', 'ogg']}
-          />
+          {/* Audio Input - Veo3 generates audio natively */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">Audio Settings</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Veo3 generates high-quality audio automatically based on your video content.
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Settings & Generation */}

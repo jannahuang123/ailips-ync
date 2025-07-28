@@ -81,9 +81,17 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
     if (project.status === 'processing' && project.external_task_id && project.provider) {
       try {
         const aiManager = getAIProviderManager();
+        // Map legacy provider names to current ones
+        let providerType: 'veo3' | 'did';
+        if (project.provider === 'heygen') {
+          providerType = 'veo3'; // HeyGen has been replaced by Veo3
+        } else {
+          providerType = project.provider as 'veo3' | 'did';
+        }
+
         const aiStatus = await aiManager.getTaskStatus(
           project.external_task_id,
-          project.provider as 'heygen' | 'did'
+          providerType
         );
 
         // Update local database with latest status

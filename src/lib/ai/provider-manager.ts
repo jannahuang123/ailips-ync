@@ -61,13 +61,26 @@ export class AIProviderManager {
           continue;
         }
 
-        // Create task - adapt params for Veo3 if needed
+        // Create task - adapt params for each provider
         let taskId: string | null;
         if (provider.type === 'veo3') {
           const veo3Params = adaptLipSyncParams(params);
           taskId = await (provider.client as Veo3Client).createLipSyncTask(veo3Params);
         } else {
-          taskId = await provider.client.createLipSyncTask(params);
+          // Ensure params are compatible with DID client
+          const qualityMapping: Record<string, 'low' | 'medium' | 'high'> = {
+            'low': 'low',
+            'medium': 'medium',
+            'high': 'high',
+            'ultra': 'high' // Map ultra to high for DID
+          };
+
+          const didParams = {
+            videoUrl: params.videoUrl || params.imageUrl || '',
+            audioUrl: params.audioUrl,
+            quality: qualityMapping[params.quality || 'medium'] || 'medium'
+          };
+          taskId = await provider.client.createLipSyncTask(didParams);
         }
 
         if (taskId) {

@@ -156,18 +156,20 @@ async function callVeo3API(request: Veo3ApiRequest): Promise<{
 
   // Add image or video input if provided
   if (request.image) {
-    requestBody.contents[0].parts.push({
-      inline_data: {
-        mime_type: "image/jpeg",
+    // TODO: Fix TypeScript types for Gemini API
+    (requestBody.contents[0].parts as any).push({
+      inlineData: {
+        mimeType: "image/jpeg",
         data: request.image
       }
     });
   }
 
   if (request.video) {
-    requestBody.contents[0].parts.push({
-      inline_data: {
-        mime_type: "video/mp4", 
+    // TODO: Fix TypeScript types for Gemini API
+    (requestBody.contents[0].parts as any).push({
+      inlineData: {
+        mimeType: "video/mp4",
         data: request.video
       }
     });
@@ -262,14 +264,15 @@ export async function POST(request: NextRequest) {
       provider: 'veo3',
       quality: body.settings.quality,
       created_at: new Date(),
-      updated_at: new Date(),
-      settings: JSON.stringify({
-        inputType: body.inputType,
-        textPrompt: body.inputData.textPrompt,
-        audioSettings: body.audioSettings,
-        videoSettings: body.settings
-      })
+      updated_at: new Date()
     });
+
+    // Map quality values to match API expectations
+    const qualityMapping: Record<string, 'standard' | 'high' | 'ultra'> = {
+      'standard': 'standard',
+      'premium': 'high',
+      'ultra': 'ultra'
+    };
 
     // Prepare Veo3 API request
     const veo3Request: Veo3ApiRequest = {
@@ -280,7 +283,7 @@ export async function POST(request: NextRequest) {
       audio_prompt: body.audioSettings.audioPrompt,
       duration_seconds: body.settings.duration,
       aspect_ratio: body.settings.aspectRatio,
-      quality: body.settings.quality,
+      quality: qualityMapping[body.settings.quality] || 'standard',
       style: body.settings.style,
       camera_movement: body.settings.cameraMovement,
       lighting: body.settings.lighting,
@@ -304,12 +307,11 @@ export async function POST(request: NextRequest) {
       .where(eq(projects.uuid, projectUuid));
 
     // Deduct credits
-    await deductUserCredits(
-      session.user.uuid,
-      creditsNeeded,
-      CreditsAmount.Veo3StandardCost,
-      `Veo3 video generation - ${projectUuid}`
-    );
+    await deductUserCredits({
+      user_uuid: session.user.uuid,
+      trans_type: 'veo3_generation' as any, // TODO: Add proper enum value
+      credits: creditsNeeded
+    });
 
     return NextResponse.json({
       success: true,

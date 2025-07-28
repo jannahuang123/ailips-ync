@@ -164,3 +164,6 @@ export async function updateCreditForOrder(order: Order) {
     throw e;
   }
 }
+
+// Alias for backward compatibility
+export const deductUserCredits = decreaseCredits;

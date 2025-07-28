@@ -547,7 +547,7 @@ export default function LipSyncEditor({ userCredits = 50, onGenerate, loading = 
                 <Checkbox
                   id="subtitles"
                   checked={enableSubtitles}
-                  onCheckedChange={setEnableSubtitles}
+                  onCheckedChange={(checked) => setEnableSubtitles(checked === true)}
                   className="border-border data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                 />
                 <label htmlFor="subtitles" className="text-sm font-medium text-foreground">Enable subtitles</label>
