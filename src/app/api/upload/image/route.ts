@@ -104,6 +104,7 @@ export async function POST(request: NextRequest) {
 
     if (s3Client && process.env.STORAGE_BUCKET) {
       // Upload to S3/R2
+      console.log('Using S3/R2 storage for image upload');
       const uploadCommand = new PutObjectCommand({
         Bucket: process.env.STORAGE_BUCKET,
         Key: key,

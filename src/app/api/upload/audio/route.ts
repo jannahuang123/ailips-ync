@@ -107,6 +107,7 @@ export async function POST(request: NextRequest) {
 
     if (s3Client && process.env.STORAGE_BUCKET) {
       // Upload to S3/R2
+      console.log('Using S3/R2 storage for audio upload');
       const uploadCommand = new PutObjectCommand({
         Bucket: process.env.STORAGE_BUCKET,
         Key: key,
@@ -136,7 +137,6 @@ export async function POST(request: NextRequest) {
       // Generate public URL
       fileUrl = `/uploads/audio/${fileName}`;
     }
-    const fileUrl = `${process.env.STORAGE_DOMAIN}/${key}`;
 
     console.log(`Audio uploaded successfully: ${fileUrl}`);
 
