@@ -11,7 +11,6 @@ import Showcase from "@/components/blocks/showcase";
 import Stats from "@/components/blocks/stats";
 import Testimonial from "@/components/blocks/testimonial";
 import LipSyncEditorWrapper from "@/components/lipsync/LipSyncEditorWrapper";
-import LipSyncDebug from "@/components/lipsync/LipSyncDebug";
 import { getLandingPage } from "@/services/page";
 
 export async function generateMetadata({
@@ -58,13 +57,7 @@ export default async function LandingPage({
             </p>
           </div>
           <div className="max-w-4xl mx-auto">
-            {/* Debug version to test component rendering */}
-            <LipSyncDebug />
-
-            {/* Original component - hidden for debugging */}
-            <div className="hidden">
-              <LipSyncEditorWrapper />
-            </div>
+            <LipSyncEditorWrapper />
           </div>
         </div>
       </section>
