@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 3
+      "actualWorkers": 4
     },
     "preserveOutput": "always",
     "reporter": [
@@ -45,7 +45,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 4
         },
         "id": "chromium",
         "name": "chromium",
@@ -61,7 +61,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 4
         },
         "id": "firefox",
         "name": "firefox",
@@ -77,7 +77,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 4
         },
         "id": "webkit",
         "name": "webkit",
@@ -93,7 +93,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 4
         },
         "id": "Mobile Chrome",
         "name": "Mobile Chrome",
@@ -109,7 +109,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 3
+          "actualWorkers": 4
         },
         "id": "Mobile Safari",
         "name": "Mobile Safari",
@@ -135,20 +135,20 @@
   },
   "suites": [
     {
-      "title": "basic.spec.ts",
-      "file": "basic.spec.ts",
+      "title": "tts-api-fix.spec.ts",
+      "file": "tts-api-fix.spec.ts",
       "column": 0,
       "line": 0,
       "specs": [],
       "suites": [
         {
-          "title": "Basic Application Tests",
-          "file": "basic.spec.ts",
+          "title": "TTS API Fix Verification",
+          "file": "tts-api-fix.spec.ts",
           "line": 3,
           "column": 6,
           "specs": [
             {
-              "title": "should load the homepage",
+              "title": "should not return 404 for TTS API endpoint when properly configured",
               "ok": true,
               "tags": [],
               "tests": [
@@ -163,12 +163,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2378,
+                      "duration": 713,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-07-28T15:46:49.946Z",
+                      "startTime": "2025-07-28T16:40:54.756Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -176,13 +176,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "8946741c555a0c4515d8-a1fd2723cb8a67137c2f",
-              "file": "basic.spec.ts",
+              "id": "1e6142aad74097a9ebe1-87b4568dd632aaaba64d",
+              "file": "tts-api-fix.spec.ts",
               "line": 4,
               "column": 7
             },
             {
-              "title": "should navigate to test editor",
+              "title": "should handle LipSync API with audioPrompt parameter",
               "ok": true,
               "tags": [],
               "tests": [
@@ -197,12 +197,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 2827,
+                      "duration": 733,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-07-28T15:46:49.937Z",
+                      "startTime": "2025-07-28T16:40:54.753Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -210,13 +210,13 @@
                   "status": "expected"
                 }
               ],
-              "id": "8946741c555a0c4515d8-a85d15604aa68e53b761",
-              "file": "basic.spec.ts",
-              "line": 14,
+              "id": "1e6142aad74097a9ebe1-5ecf4b50cd4693b28722",
+              "file": "tts-api-fix.spec.ts",
+              "line": 22,
               "column": 7
             },
             {
-              "title": "should handle 404 pages gracefully",
+              "title": "should validate LipSync API parameters correctly",
               "ok": true,
               "tags": [],
               "tests": [
@@ -231,12 +231,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 1838,
+                      "duration": 725,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2025-07-28T15:46:49.937Z",
+                      "startTime": "2025-07-28T16:40:54.751Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -244,9 +244,757 @@
                   "status": "expected"
                 }
               ],
-              "id": "8946741c555a0c4515d8-af7a2b1573fa42c1afdd",
-              "file": "basic.spec.ts",
-              "line": 27,
+              "id": "1e6142aad74097a9ebe1-cf8be9439ae534150f15",
+              "file": "tts-api-fix.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "should accept both audioUrl and audioPrompt parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 726,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:54.753Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-dbdc918467e97a0bf45e",
+              "file": "tts-api-fix.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should validate image URL format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 119,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:55.630Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-a5f5bd8060ae3bc5706f",
+              "file": "tts-api-fix.spec.ts",
+              "line": 72,
+              "column": 7
+            },
+            {
+              "title": "should not return 404 for TTS API endpoint when properly configured",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 987,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:56.002Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-4946ef564037de9ccc5f",
+              "file": "tts-api-fix.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should handle LipSync API with audioPrompt parameter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 896,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:55.997Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-6f55907ba8d00ace934d",
+              "file": "tts-api-fix.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "should validate LipSync API parameters correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1221,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:55.984Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-8ad95700521f2dcc647c",
+              "file": "tts-api-fix.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "should accept both audioUrl and audioPrompt parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1340,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:56.114Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-8c6d36796766066401dc",
+              "file": "tts-api-fix.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should validate image URL format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 463,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:57.472Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-d45879489eeb79deafcc",
+              "file": "tts-api-fix.spec.ts",
+              "line": 72,
+              "column": 7
+            },
+            {
+              "title": "should not return 404 for TTS API endpoint when properly configured",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 557,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:58.885Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-3eb0c3ebd21ef7de6708",
+              "file": "tts-api-fix.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should handle LipSync API with audioPrompt parameter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 539,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:58.974Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-09d3dc8ea6d926e47f0f",
+              "file": "tts-api-fix.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "should validate LipSync API parameters correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 10,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 372,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:59.802Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-328c8400ece95eb31dcd",
+              "file": "tts-api-fix.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "should accept both audioUrl and audioPrompt parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 12,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 438,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:00.110Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-7129a124cc7fbfc54d5e",
+              "file": "tts-api-fix.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should validate image URL format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 230,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:40:59.646Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-ec4eecc64cd65d661ee1",
+              "file": "tts-api-fix.spec.ts",
+              "line": 72,
+              "column": 7
+            },
+            {
+              "title": "should not return 404 for TTS API endpoint when properly configured",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 324,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:00.143Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-31efc3df872b3f8d1e0f",
+              "file": "tts-api-fix.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should handle LipSync API with audioPrompt parameter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 13,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 247,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:00.427Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-0010d412e130ea9b5abe",
+              "file": "tts-api-fix.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "should validate LipSync API parameters correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 14,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 217,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:00.909Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-ea4726e93f538124eb95",
+              "file": "tts-api-fix.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "should accept both audioUrl and audioPrompt parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 11,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 148,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:00.603Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-6e887e4dc698b50bd226",
+              "file": "tts-api-fix.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should validate image URL format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [
+                    {
+                      "workerIndex": 15,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 327,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:01.114Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-90345e1764763c7858c8",
+              "file": "tts-api-fix.spec.ts",
+              "line": 72,
+              "column": 7
+            },
+            {
+              "title": "should not return 404 for TTS API endpoint when properly configured",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 383,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:01.150Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-ed6d339be622307e6945",
+              "file": "tts-api-fix.spec.ts",
+              "line": 4,
+              "column": 7
+            },
+            {
+              "title": "should handle LipSync API with audioPrompt parameter",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 17,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 450,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:01.212Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-f91314fe8b9ae2ff8cc0",
+              "file": "tts-api-fix.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "should validate LipSync API parameters correctly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 18,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 341,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:01.953Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-ce655c87fa71ceddfa03",
+              "file": "tts-api-fix.spec.ts",
+              "line": 41,
+              "column": 7
+            },
+            {
+              "title": "should accept both audioUrl and audioPrompt parameters",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 19,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 314,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:02.040Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-29077e5d39e86485f7df",
+              "file": "tts-api-fix.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "should validate image URL format",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [
+                    {
+                      "workerIndex": 16,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 196,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-07-28T16:41:01.714Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "1e6142aad74097a9ebe1-313d0eda1db3216cd2e1",
+              "file": "tts-api-fix.spec.ts",
+              "line": 72,
               "column": 7
             }
           ]
@@ -256,9 +1004,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2025-07-28T15:46:43.692Z",
-    "duration": 9225.526999999998,
-    "expected": 3,
+    "startTime": "2025-07-28T16:40:52.684Z",
+    "duration": 9821.327,
+    "expected": 25,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

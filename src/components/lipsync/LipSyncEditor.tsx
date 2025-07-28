@@ -154,26 +154,13 @@ export default function LipSyncEditor({ userCredits = 50, onGenerate, loading = 
 
       // Step 2: Handle audio based on mode
       let audioUrl = '';
+      let audioPrompt = '';
 
       if (audioInputMode === "text") {
-        // Generate audio using TTS
-        toast.info("Converting text to speech...");
-        const ttsResponse = await fetch('/api/tts/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: scriptText,
-            voice: selectedVoice,
-            format: 'mp3'
-          })
-        });
-
-        if (!ttsResponse.ok) {
-          throw new Error('Text-to-speech generation failed');
-        }
-
-        const ttsResult = await ttsResponse.json();
-        audioUrl = ttsResult.audioUrl;
+        // Use text directly for Veo3 audio generation (no TTS needed)
+        toast.info("Preparing text for audio generation...");
+        audioPrompt = scriptText;
+        // audioUrl remains empty - Veo3 will generate audio from text
       } else if (audioInputMode === "upload" && uploadedAudio) {
         // Upload audio file
         const audioFormData = new FormData();
@@ -191,23 +178,9 @@ export default function LipSyncEditor({ userCredits = 50, onGenerate, loading = 
         const audioResult = await audioUploadResponse.json();
         audioUrl = audioResult.url;
       } else if (audioInputMode === "record") {
-        // For recorded audio, use the transcribed text with TTS
-        const ttsResponse = await fetch('/api/tts/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            text: recordedText,
-            voice: selectedVoice,
-            format: 'mp3'
-          })
-        });
-
-        if (!ttsResponse.ok) {
-          throw new Error('Text-to-speech generation failed');
-        }
-
-        const ttsResult = await ttsResponse.json();
-        audioUrl = ttsResult.audioUrl;
+        // For recorded audio, use the transcribed text for Veo3 audio generation
+        audioPrompt = recordedText;
+        // audioUrl remains empty - Veo3 will generate audio from text
       }
 
       setProgress(40);
@@ -221,6 +194,7 @@ export default function LipSyncEditor({ userCredits = 50, onGenerate, loading = 
           name: `LipSync ${Date.now()}`,
           imageUrl: fileUrl,  // For photos, use imageUrl
           audioUrl: audioUrl,
+          audioPrompt: audioPrompt, // Pass text for Veo3 audio generation
           quality: 'medium'   // Fixed medium quality for 10 credits
         })
       });

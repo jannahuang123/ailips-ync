@@ -1,10 +1,62 @@
-<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="9.225526999999998">
-<testsuite name="basic.spec.ts" timestamp="2025-07-28T15:46:49.614Z" hostname="chromium" tests="3" failures="0" skipped="0" time="7.043" errors="0">
-<testcase name="Basic Application Tests › should load the homepage" classname="basic.spec.ts" time="2.378">
+<testsuites id="" name="" tests="25" failures="0" skipped="0" errors="0" time="9.821327">
+<testsuite name="tts-api-fix.spec.ts" timestamp="2025-07-28T16:40:54.437Z" hostname="chromium" tests="5" failures="0" skipped="0" time="3.016" errors="0">
+<testcase name="TTS API Fix Verification › should not return 404 for TTS API endpoint when properly configured" classname="tts-api-fix.spec.ts" time="0.713">
 </testcase>
-<testcase name="Basic Application Tests › should navigate to test editor" classname="basic.spec.ts" time="2.827">
+<testcase name="TTS API Fix Verification › should handle LipSync API with audioPrompt parameter" classname="tts-api-fix.spec.ts" time="0.733">
 </testcase>
-<testcase name="Basic Application Tests › should handle 404 pages gracefully" classname="basic.spec.ts" time="1.838">
+<testcase name="TTS API Fix Verification › should validate LipSync API parameters correctly" classname="tts-api-fix.spec.ts" time="0.725">
+</testcase>
+<testcase name="TTS API Fix Verification › should accept both audioUrl and audioPrompt parameters" classname="tts-api-fix.spec.ts" time="0.726">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate image URL format" classname="tts-api-fix.spec.ts" time="0.119">
+</testcase>
+</testsuite>
+<testsuite name="tts-api-fix.spec.ts" timestamp="2025-07-28T16:40:54.437Z" hostname="firefox" tests="5" failures="0" skipped="0" time="4.907" errors="0">
+<testcase name="TTS API Fix Verification › should not return 404 for TTS API endpoint when properly configured" classname="tts-api-fix.spec.ts" time="0.987">
+</testcase>
+<testcase name="TTS API Fix Verification › should handle LipSync API with audioPrompt parameter" classname="tts-api-fix.spec.ts" time="0.896">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate LipSync API parameters correctly" classname="tts-api-fix.spec.ts" time="1.221">
+</testcase>
+<testcase name="TTS API Fix Verification › should accept both audioUrl and audioPrompt parameters" classname="tts-api-fix.spec.ts" time="1.34">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate image URL format" classname="tts-api-fix.spec.ts" time="0.463">
+</testcase>
+</testsuite>
+<testsuite name="tts-api-fix.spec.ts" timestamp="2025-07-28T16:40:54.437Z" hostname="webkit" tests="5" failures="0" skipped="0" time="2.136" errors="0">
+<testcase name="TTS API Fix Verification › should not return 404 for TTS API endpoint when properly configured" classname="tts-api-fix.spec.ts" time="0.557">
+</testcase>
+<testcase name="TTS API Fix Verification › should handle LipSync API with audioPrompt parameter" classname="tts-api-fix.spec.ts" time="0.539">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate LipSync API parameters correctly" classname="tts-api-fix.spec.ts" time="0.372">
+</testcase>
+<testcase name="TTS API Fix Verification › should accept both audioUrl and audioPrompt parameters" classname="tts-api-fix.spec.ts" time="0.438">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate image URL format" classname="tts-api-fix.spec.ts" time="0.23">
+</testcase>
+</testsuite>
+<testsuite name="tts-api-fix.spec.ts" timestamp="2025-07-28T16:40:54.437Z" hostname="Mobile Chrome" tests="5" failures="0" skipped="0" time="1.263" errors="0">
+<testcase name="TTS API Fix Verification › should not return 404 for TTS API endpoint when properly configured" classname="tts-api-fix.spec.ts" time="0.324">
+</testcase>
+<testcase name="TTS API Fix Verification › should handle LipSync API with audioPrompt parameter" classname="tts-api-fix.spec.ts" time="0.247">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate LipSync API parameters correctly" classname="tts-api-fix.spec.ts" time="0.217">
+</testcase>
+<testcase name="TTS API Fix Verification › should accept both audioUrl and audioPrompt parameters" classname="tts-api-fix.spec.ts" time="0.148">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate image URL format" classname="tts-api-fix.spec.ts" time="0.327">
+</testcase>
+</testsuite>
+<testsuite name="tts-api-fix.spec.ts" timestamp="2025-07-28T16:40:54.437Z" hostname="Mobile Safari" tests="5" failures="0" skipped="0" time="1.684" errors="0">
+<testcase name="TTS API Fix Verification › should not return 404 for TTS API endpoint when properly configured" classname="tts-api-fix.spec.ts" time="0.383">
+</testcase>
+<testcase name="TTS API Fix Verification › should handle LipSync API with audioPrompt parameter" classname="tts-api-fix.spec.ts" time="0.45">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate LipSync API parameters correctly" classname="tts-api-fix.spec.ts" time="0.341">
+</testcase>
+<testcase name="TTS API Fix Verification › should accept both audioUrl and audioPrompt parameters" classname="tts-api-fix.spec.ts" time="0.314">
+</testcase>
+<testcase name="TTS API Fix Verification › should validate image URL format" classname="tts-api-fix.spec.ts" time="0.196">
 </testcase>
 </testsuite>
 </testsuites>

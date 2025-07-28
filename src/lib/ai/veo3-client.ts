@@ -7,7 +7,8 @@
 
 export interface Veo3LipSyncParams {
   imageUrl: string;
-  audioUrl: string;
+  audioUrl?: string; // Optional - for uploaded audio files
+  audioPrompt?: string; // Optional - for text-to-speech generation
   quality?: 'standard' | 'hd' | '4k';
   aspectRatio?: '16:9' | '9:16' | '1:1';
   duration?: 'auto' | number; // seconds
@@ -90,6 +91,7 @@ export class Veo3Client {
           inputs: {
             image_url: params.imageUrl,
             audio_url: params.audioUrl,
+            audio_prompt: params.audioPrompt, // Text for TTS generation
             duration: params.duration || 'auto',
             quality: params.quality || 'hd',
             aspect_ratio: params.aspectRatio || '16:9',
@@ -99,7 +101,8 @@ export class Veo3Client {
             lip_sync: true,
             face_enhancement: true,
             audio_sync_precision: 'high',
-            background_stability: true
+            background_stability: true,
+            generate_audio: !!params.audioPrompt // Enable audio generation if text provided
           },
           webhook_url: `${process.env.NEXT_PUBLIC_WEB_URL}/api/webhooks/veo3`
         })
@@ -223,7 +226,8 @@ export function getVeo3Client(): Veo3Client {
 export interface LipSyncParams {
   videoUrl?: string;  // For backward compatibility
   imageUrl?: string;  // Veo3 uses image instead of video
-  audioUrl: string;
+  audioUrl?: string;  // Optional - for uploaded audio files
+  audioPrompt?: string; // Optional - for text-to-speech generation
   quality?: 'low' | 'medium' | 'high' | 'ultra';
 }
 
@@ -232,6 +236,7 @@ export function adaptLipSyncParams(params: LipSyncParams): Veo3LipSyncParams {
   return {
     imageUrl: params.imageUrl || params.videoUrl || '',
     audioUrl: params.audioUrl,
+    audioPrompt: params.audioPrompt, // Pass through text for TTS
     quality: mapQualityToVeo3(params.quality || 'medium'),
     aspectRatio: '16:9',
     duration: 'auto'

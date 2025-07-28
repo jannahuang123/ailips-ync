@@ -18,7 +18,8 @@ import { eq } from 'drizzle-orm';
 interface CreateProjectRequest {
   name: string;
   imageUrl: string;  // Changed from videoUrl to imageUrl for Veo3
-  audioUrl: string;
+  audioUrl?: string; // Optional - for uploaded audio files
+  audioPrompt?: string; // Optional - for text-to-speech generation
   quality?: 'low' | 'medium' | 'high';
 }
 
@@ -35,18 +36,18 @@ export async function POST(request: NextRequest) {
 
     // Parse request body
     const body = await request.json() as CreateProjectRequest;
-    const { name, imageUrl, audioUrl, quality = 'medium' } = body;
+    const { name, imageUrl, audioUrl, audioPrompt, quality = 'medium' } = body;
 
     // Validate required fields
-    if (!name || !imageUrl || !audioUrl) {
+    if (!name || !imageUrl || (!audioUrl && !audioPrompt)) {
       return NextResponse.json(
-        { error: 'Missing required fields: name, imageUrl, audioUrl' },
+        { error: 'Missing required fields: name, imageUrl, and either audioUrl or audioPrompt' },
         { status: 400 }
       );
     }
 
-    // Validate URLs
-    if (!isValidUrl(imageUrl) || !isValidUrl(audioUrl)) {
+    // Validate URLs (only if provided)
+    if (!isValidUrl(imageUrl) || (audioUrl && !isValidUrl(audioUrl))) {
       return NextResponse.json(
         { error: 'Invalid image or audio URL format' },
         { status: 400 }
@@ -106,6 +107,7 @@ export async function POST(request: NextRequest) {
       const result = await aiManager.processLipSync({
         imageUrl,  // Use imageUrl for Veo3
         audioUrl,
+        audioPrompt, // Pass text for Veo3 audio generation
         quality
       });
 

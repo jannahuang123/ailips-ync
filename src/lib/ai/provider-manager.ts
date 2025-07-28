@@ -67,6 +67,12 @@ export class AIProviderManager {
           const veo3Params = adaptLipSyncParams(params);
           taskId = await (provider.client as Veo3Client).createLipSyncTask(veo3Params);
         } else {
+          // DID client doesn't support audioPrompt, skip if only text is provided
+          if (params.audioPrompt && !params.audioUrl) {
+            console.log(`Skipping ${provider.name} - doesn't support text-to-speech`);
+            continue;
+          }
+
           // Ensure params are compatible with DID client
           const qualityMapping: Record<string, 'low' | 'medium' | 'high'> = {
             'low': 'low',
@@ -77,7 +83,7 @@ export class AIProviderManager {
 
           const didParams = {
             videoUrl: params.videoUrl || params.imageUrl || '',
-            audioUrl: params.audioUrl,
+            audioUrl: params.audioUrl || '', // Provide default empty string
             quality: qualityMapping[params.quality || 'medium'] || 'medium'
           };
           taskId = await provider.client.createLipSyncTask(didParams);
