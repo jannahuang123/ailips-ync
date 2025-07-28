@@ -11,6 +11,7 @@ import Showcase from "@/components/blocks/showcase";
 import Stats from "@/components/blocks/stats";
 import Testimonial from "@/components/blocks/testimonial";
 import LipSyncEditorWrapper from "@/components/lipsync/LipSyncEditorWrapper";
+import LipSyncDebug from "@/components/lipsync/LipSyncDebug";
 import { getLandingPage } from "@/services/page";
 
 export async function generateMetadata({
@@ -44,8 +45,8 @@ export default async function LandingPage({
     <>
       {page.hero && <Hero hero={page.hero} />}
 
-      {/* LipSync Editor - Added below hero section */}
-      <section className="py-16 bg-muted/30 dark:bg-muted/10 transition-colors">
+      {/* LipSync Editor - Always show, positioned after hero */}
+      <section id="demo" className="py-16 bg-muted/30 dark:bg-muted/10 transition-colors">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -56,8 +57,14 @@ export default async function LandingPage({
               Generate professional-quality talking videos in seconds.
             </p>
           </div>
-          <div className="flex justify-center">
-            <LipSyncEditorWrapper userCredits={50} />
+          <div className="max-w-4xl mx-auto">
+            {/* Debug version to test component rendering */}
+            <LipSyncDebug />
+
+            {/* Original component - hidden for debugging */}
+            <div className="hidden">
+              <LipSyncEditorWrapper />
+            </div>
           </div>
         </div>
       </section>
