@@ -46,15 +46,21 @@ function createS3Client() {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('🖼️ Image upload API called');
   try {
     // Check authentication
     const session = await auth();
+    console.log('🔐 Session check:', session ? 'authenticated' : 'not authenticated');
+
     if (!session?.user) {
+      console.log('❌ Authentication failed - no session or user');
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 }
       );
     }
+
+    console.log('✅ User authenticated:', session.user.email);
 
     // Parse form data
     const formData = await request.formData();

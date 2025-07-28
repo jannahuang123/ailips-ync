@@ -1,0 +1,10 @@
+<testsuites id="" name="" tests="3" failures="0" skipped="0" errors="0" time="9.225526999999998">
+<testsuite name="basic.spec.ts" timestamp="2025-07-28T15:46:49.614Z" hostname="chromium" tests="3" failures="0" skipped="0" time="7.043" errors="0">
+<testcase name="Basic Application Tests › should load the homepage" classname="basic.spec.ts" time="2.378">
+</testcase>
+<testcase name="Basic Application Tests › should navigate to test editor" classname="basic.spec.ts" time="2.827">
+</testcase>
+<testcase name="Basic Application Tests › should handle 404 pages gracefully" classname="basic.spec.ts" time="1.838">
+</testcase>
+</testsuite>
+</testsuites>

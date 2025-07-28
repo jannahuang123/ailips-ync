@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-07-28T16:21:29.169Z",
+  "summary": {
+    "passed": 2,
+    "failed": 1,
+    "warnings": 2,
+    "total": 5
+  },
+  "results": [
+    {
+      "test": "TTS API Keys",
+      "status": "fail",
+      "message": "No TTS API keys configured",
+      "timestamp": "2025-07-28T16:21:28.916Z"
+    },
+    {
+      "test": "TTS Endpoint",
+      "status": "pass",
+      "message": "Available voices: 8",
+      "timestamp": "2025-07-28T16:21:29.088Z"
+    },
+    {
+      "test": "TTS Providers",
+      "status": "pass",
+      "message": "Available: demo",
+      "timestamp": "2025-07-28T16:21:29.088Z"
+    },
+    {
+      "test": "TTS Generation",
+      "status": "warn",
+      "message": "Authentication required (expected for production)",
+      "timestamp": "2025-07-28T16:21:29.134Z"
+    },
+    {
+      "test": "Fallback Logic",
+      "status": "warn",
+      "message": "Unexpected response: 401",
+      "timestamp": "2025-07-28T16:21:29.169Z"
+    }
+  ]
+}

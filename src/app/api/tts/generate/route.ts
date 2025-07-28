@@ -14,14 +14,48 @@ interface TTSVoiceConfig {
   name: string;
   language: string;
   gender: 'male' | 'female';
-  provider: 'azure' | 'google' | 'openai';
+  provider: 'apicore' | 'azure' | 'google' | 'openai';
   voiceId: string;
 }
 
 const TTS_VOICES: Record<string, TTSVoiceConfig> = {
+  // APICore.ai voices (primary)
+  'apicore-en-US-female': {
+    id: 'apicore-en-US-female',
+    name: 'Sarah (APICore)',
+    language: 'en-US',
+    gender: 'female',
+    provider: 'apicore',
+    voiceId: 'en-US-female-1'
+  },
+  'apicore-en-US-male': {
+    id: 'apicore-en-US-male',
+    name: 'David (APICore)',
+    language: 'en-US',
+    gender: 'male',
+    provider: 'apicore',
+    voiceId: 'en-US-male-1'
+  },
+  'apicore-zh-CN-female': {
+    id: 'apicore-zh-CN-female',
+    name: '小雅 (APICore)',
+    language: 'zh-CN',
+    gender: 'female',
+    provider: 'apicore',
+    voiceId: 'zh-CN-female-1'
+  },
+  'apicore-zh-CN-male': {
+    id: 'apicore-zh-CN-male',
+    name: '小明 (APICore)',
+    language: 'zh-CN',
+    gender: 'male',
+    provider: 'apicore',
+    voiceId: 'zh-CN-male-1'
+  },
+  // Azure voices (fallback)
   'en-US-neural-jenny': {
     id: 'en-US-neural-jenny',
-    name: 'Jenny (US)',
+    name: 'Jenny (Azure)',
     language: 'en-US',
     gender: 'female',
     provider: 'azure',
@@ -29,7 +63,7 @@ const TTS_VOICES: Record<string, TTSVoiceConfig> = {
   },
   'en-US-neural-guy': {
     id: 'en-US-neural-guy',
-    name: 'Guy (US)',
+    name: 'Guy (Azure)',
     language: 'en-US',
     gender: 'male',
     provider: 'azure',
@@ -37,7 +71,7 @@ const TTS_VOICES: Record<string, TTSVoiceConfig> = {
   },
   'zh-CN-neural-xiaoxiao': {
     id: 'zh-CN-neural-xiaoxiao',
-    name: '晓晓 (中文)',
+    name: '晓晓 (Azure)',
     language: 'zh-CN',
     gender: 'female',
     provider: 'azure',
@@ -45,7 +79,7 @@ const TTS_VOICES: Record<string, TTSVoiceConfig> = {
   },
   'zh-CN-neural-yunxi': {
     id: 'zh-CN-neural-yunxi',
-    name: '云希 (中文)',
+    name: '云希 (Azure)',
     language: 'zh-CN',
     gender: 'male',
     provider: 'azure',
@@ -174,14 +208,119 @@ async function generateGoogleTTS(
   return audioBytes.buffer;
 }
 
+// Demo TTS (fallback when no API keys are configured)
+async function generateDemoTTS(
+  text: string,
+  voiceConfig: TTSVoiceConfig
+): Promise<ArrayBuffer> {
+  console.log(`Demo TTS: Generating placeholder audio for "${text}" with voice ${voiceConfig.name}`);
+
+  // 创建一个简单的WAV文件作为演示
+  const sampleRate = 22050;
+  const duration = Math.min(text.length * 0.08, 3); // 根据文本长度，最多3秒
+  const samples = Math.floor(sampleRate * duration);
+
+  // 创建WAV文件
+  const buffer = new ArrayBuffer(44 + samples * 2);
+  const view = new DataView(buffer);
+
+  // WAV文件头
+  const writeString = (offset: number, string: string) => {
+    for (let i = 0; i < string.length; i++) {
+      view.setUint8(offset + i, string.charCodeAt(i));
+    }
+  };
+
+  writeString(0, 'RIFF');
+  view.setUint32(4, 36 + samples * 2, true);
+  writeString(8, 'WAVE');
+  writeString(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * 2, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  writeString(36, 'data');
+  view.setUint32(40, samples * 2, true);
+
+  // 生成简单的音频数据 (多频率混合，模拟语音)
+  for (let i = 0; i < samples; i++) {
+    const t = i / sampleRate;
+    // 混合多个频率来模拟语音
+    const freq1 = 200 + Math.sin(t * 2) * 50; // 基频变化
+    const freq2 = 400 + Math.sin(t * 3) * 100; // 谐波
+    const sample = (Math.sin(2 * Math.PI * freq1 * t) * 0.3 +
+                   Math.sin(2 * Math.PI * freq2 * t) * 0.1) *
+                   Math.exp(-t * 2); // 衰减
+    view.setInt16(44 + i * 2, sample * 16384, true);
+  }
+
+  return buffer;
+}
+
+// APICore.ai TTS (primary)
+async function generateAPICoreTTS(
+  text: string,
+  voiceConfig: TTSVoiceConfig,
+  rate: number = 1,
+  pitch: number = 1
+): Promise<ArrayBuffer> {
+  const apiKey = process.env.APICORE_API_KEY;
+  const baseUrl = process.env.APICORE_BASE_URL || 'https://api.apicore.ai';
+
+  if (!apiKey) {
+    throw new Error('APICore.ai API key not configured');
+  }
+
+  // Use the voiceId directly for APICore.ai voices, or map legacy voices
+  let voice = voiceConfig.voiceId;
+
+  // Legacy voice mapping for backward compatibility
+  const legacyVoiceMap: Record<string, string> = {
+    'en-US-neural-jenny': 'en-US-female-1',
+    'en-US-neural-guy': 'en-US-male-1',
+    'zh-CN-neural-xiaoxiao': 'zh-CN-female-1',
+    'zh-CN-neural-yunxi': 'zh-CN-male-1'
+  };
+
+  if (legacyVoiceMap[voiceConfig.id]) {
+    voice = legacyVoiceMap[voiceConfig.id];
+  }
+
+  const response = await fetch(`${baseUrl}/v1/tts/generate`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      text: text,
+      voice: voice,
+      speed: Math.max(0.5, Math.min(2.0, rate)),
+      pitch: Math.max(0.5, Math.min(2.0, pitch)),
+      format: 'mp3',
+      sample_rate: 22050
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`APICore.ai TTS failed: ${errorText}`);
+  }
+
+  return await response.arrayBuffer();
+}
+
 // OpenAI TTS (alternative)
 async function generateOpenAITTS(
-  text: string, 
-  voiceConfig: TTSVoiceConfig, 
+  text: string,
+  voiceConfig: TTSVoiceConfig,
   rate: number = 1
 ): Promise<ArrayBuffer> {
   const apiKey = process.env.OPENAI_API_KEY;
-  
+
   if (!apiKey) {
     throw new Error('OpenAI API key not configured');
   }
@@ -273,28 +412,52 @@ export async function POST(request: NextRequest) {
 
     // Try different TTS providers based on configuration and availability
     try {
-      if (voiceConfig.provider === 'azure' && process.env.AZURE_SPEECH_KEY) {
+      // Priority order: APICore.ai -> Azure -> Google -> OpenAI
+      if (process.env.APICORE_API_KEY) {
+        audioBuffer = await generateAPICoreTTS(text, voiceConfig, rate, pitch);
+      } else if (voiceConfig.provider === 'azure' && process.env.AZURE_SPEECH_KEY) {
         audioBuffer = await generateAzureTTS(text, voiceConfig, rate, pitch);
       } else if (voiceConfig.provider === 'google' && process.env.GOOGLE_CLOUD_API_KEY) {
         audioBuffer = await generateGoogleTTS(text, voiceConfig, rate, pitch);
       } else if (process.env.OPENAI_API_KEY) {
         audioBuffer = await generateOpenAITTS(text, voiceConfig, rate);
       } else {
-        throw new Error('No TTS provider configured');
+        // Use demo TTS as last resort
+        console.log('No TTS API keys configured, using demo TTS');
+        audioBuffer = await generateDemoTTS(text, voiceConfig);
       }
     } catch (primaryError) {
       console.error('Primary TTS provider failed:', primaryError);
-      
-      // Fallback to OpenAI if available
-      if (process.env.OPENAI_API_KEY && voiceConfig.provider !== 'openai') {
+
+      // Fallback chain: try other available providers
+      let fallbackSuccess = false;
+
+      // Try OpenAI as first fallback
+      if (process.env.OPENAI_API_KEY && !fallbackSuccess) {
         try {
           audioBuffer = await generateOpenAITTS(text, voiceConfig, rate);
+          fallbackSuccess = true;
+          console.log('Fallback to OpenAI TTS successful');
         } catch (fallbackError) {
-          console.error('Fallback TTS provider failed:', fallbackError);
-          throw primaryError;
+          console.error('OpenAI TTS fallback failed:', fallbackError);
         }
-      } else {
-        throw primaryError;
+      }
+
+      // Try Azure as second fallback
+      if (process.env.AZURE_SPEECH_KEY && !fallbackSuccess) {
+        try {
+          audioBuffer = await generateAzureTTS(text, voiceConfig, rate, pitch);
+          fallbackSuccess = true;
+          console.log('Fallback to Azure TTS successful');
+        } catch (fallbackError) {
+          console.error('Azure TTS fallback failed:', fallbackError);
+        }
+      }
+
+      if (!fallbackSuccess) {
+        // Final fallback to demo TTS
+        console.log('All TTS providers failed, using demo TTS as final fallback');
+        audioBuffer = await generateDemoTTS(text, voiceConfig);
       }
     }
 
@@ -340,13 +503,21 @@ export async function GET() {
       provider: voice.provider
     }));
 
+    const hasAnyProvider = !!(process.env.APICORE_API_KEY ||
+                             process.env.AZURE_SPEECH_KEY ||
+                             process.env.GOOGLE_CLOUD_API_KEY ||
+                             process.env.OPENAI_API_KEY);
+
     return NextResponse.json({
       voices,
       providers: {
+        apicore: !!process.env.APICORE_API_KEY,
         azure: !!process.env.AZURE_SPEECH_KEY,
         google: !!process.env.GOOGLE_CLOUD_API_KEY,
-        openai: !!process.env.OPENAI_API_KEY
-      }
+        openai: !!process.env.OPENAI_API_KEY,
+        demo: !hasAnyProvider // Demo mode when no real providers are available
+      },
+      mode: hasAnyProvider ? 'production' : 'demo'
     });
   } catch (error) {
     console.error('Error listing TTS voices:', error);

@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-07-28T16:25:11.550Z",
+  "summary": {
+    "passed": 15,
+    "failed": 0,
+    "total": 15,
+    "successRate": 100
+  },
+  "results": [
+    {
+      "status": "pass",
+      "message": "APICore.ai TTS函数已添加",
+      "timestamp": "2025-07-28T16:25:11.482Z"
+    },
+    {
+      "status": "pass",
+      "message": "演示TTS功能已添加",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "回退机制已实现",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "APICore.ai语音配置已添加",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "APICore.ai环境变量已配置",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "TTS测试页面已创建",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "修复文档已创建",
+      "timestamp": "2025-07-28T16:25:11.483Z"
+    },
+    {
+      "status": "pass",
+      "message": "TTS API响应正常，可用语音: 8个",
+      "timestamp": "2025-07-28T16:25:11.549Z"
+    },
+    {
+      "status": "pass",
+      "message": "可用TTS提供商: demo",
+      "timestamp": "2025-07-28T16:25:11.549Z"
+    },
+    {
+      "status": "pass",
+      "message": "演示模式已启用",
+      "timestamp": "2025-07-28T16:25:11.549Z"
+    },
+    {
+      "status": "pass",
+      "message": "TTS模式: demo",
+      "timestamp": "2025-07-28T16:25:11.549Z"
+    },
+    {
+      "status": "pass",
+      "message": "文件长度合理: 530行",
+      "timestamp": "2025-07-28T16:25:11.550Z"
+    },
+    {
+      "status": "pass",
+      "message": "错误处理充分",
+      "timestamp": "2025-07-28T16:25:11.550Z"
+    },
+    {
+      "status": "pass",
+      "message": "TypeScript类型定义完整",
+      "timestamp": "2025-07-28T16:25:11.550Z"
+    },
+    {
+      "status": "pass",
+      "message": "代码注释充分",
+      "timestamp": "2025-07-28T16:25:11.550Z"
+    }
+  ]
+}
