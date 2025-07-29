@@ -122,14 +122,26 @@ export const authOptions: NextAuthConfig = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      const isAllowedToSignIn = true;
-      if (isAllowedToSignIn) {
-        return true;
-      } else {
-        // Return false to display a default error message
+      console.log('🚪 SignIn Callback 开始:', {
+        userEmail: user?.email,
+        userName: user?.name,
+        provider: account?.provider,
+        providerAccountId: account?.providerAccountId,
+        accountType: account?.type
+      });
+
+      try {
+        const isAllowedToSignIn = true;
+        if (isAllowedToSignIn) {
+          console.log('✅ SignIn 允许登录');
+          return true;
+        } else {
+          console.log('❌ SignIn 拒绝登录');
+          return false;
+        }
+      } catch (error) {
+        console.error('❌ SignIn Callback 错误:', error);
         return false;
-        // Or you can return a URL to redirect to:
-        // return '/unauthorized'
       }
     },
     async redirect({ url, baseUrl }) {
@@ -140,22 +152,61 @@ export const authOptions: NextAuthConfig = {
       return baseUrl;
     },
     async session({ session, token, user }) {
+      console.log('🎫 Session Callback:', {
+        hasSession: !!session,
+        hasToken: !!token,
+        hasTokenUser: !!token?.user,
+        sessionUserEmail: session?.user?.email,
+        tokenUserEmail: token?.user?.email,
+        tokenUserUuid: token?.user?.uuid
+      });
+
       if (token && token.user && token.user) {
         session.user = token.user;
+        console.log('✅ Session 用户信息已设置:', {
+          email: session.user.email,
+          uuid: session.user.uuid
+        });
+      } else {
+        console.log('⚠️ Session 缺少用户信息');
       }
       return session;
     },
     async jwt({ token, user, account }) {
+      console.log('🔍 JWT Callback 开始:', {
+        hasToken: !!token,
+        hasUser: !!user,
+        hasAccount: !!account,
+        provider: account?.provider,
+        userEmail: user?.email,
+        tokenSub: token?.sub,
+        existingTokenUser: !!token?.user
+      });
+
       // Persist the OAuth access_token and or the user id to the token right after signin
       try {
         if (!user || !account) {
+          console.log('🔄 JWT 返回现有 token (无新用户或账户)');
           return token;
         }
 
+        console.log('👤 JWT 处理新用户登录:', {
+          email: user.email,
+          provider: account.provider,
+          providerAccountId: account.providerAccountId
+        });
+
         const userInfo = await handleSignInUser(user, account);
         if (!userInfo) {
+          console.error('❌ handleSignInUser 返回空值');
           throw new Error("save user failed");
         }
+
+        console.log('✅ 用户保存成功:', {
+          uuid: userInfo.uuid,
+          email: userInfo.email,
+          nickname: userInfo.nickname
+        });
 
         token.user = {
           uuid: userInfo.uuid,
@@ -165,9 +216,16 @@ export const authOptions: NextAuthConfig = {
           created_at: userInfo.created_at,
         };
 
+        console.log('✅ JWT token.user 已设置');
         return token;
       } catch (e) {
-        console.error("jwt callback error:", e);
+        console.error("❌ JWT callback 错误:", e);
+        console.error("错误详情:", {
+          message: e.message,
+          stack: e.stack,
+          userEmail: user?.email,
+          provider: account?.provider
+        });
         return token;
       }
     },

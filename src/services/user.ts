@@ -12,23 +12,41 @@ import { getUuid } from "@/lib/hash";
 
 // save user to database, if user not exist, create a new user
 export async function saveUser(user: User) {
+  console.log('💾 saveUser 开始:', {
+    email: user.email,
+    uuid: user.uuid,
+    nickname: user.nickname,
+    provider: user.signin_provider
+  });
+
   try {
     if (!user.email) {
+      console.error('❌ 用户邮箱为空');
       throw new Error("invalid user email");
     }
 
+    console.log('🔍 查找现有用户:', user.email);
     const existUser = await findUserByEmail(user.email);
 
     if (!existUser) {
+      console.log('👤 用户不存在，创建新用户');
       // user not exist, create a new user
       if (!user.uuid) {
         user.uuid = getUuid();
+        console.log('🆔 生成新 UUID:', user.uuid);
       }
 
-      console.log("user to be inserted:", user);
+      console.log("📝 准备插入用户:", {
+        uuid: user.uuid,
+        email: user.email,
+        nickname: user.nickname,
+        signin_provider: user.signin_provider
+      });
 
       const dbUser = await insertUser(user as typeof users.$inferInsert);
+      console.log('✅ 用户插入成功:', dbUser);
 
+      console.log('💰 为新用户增加积分...');
       // increase credits for new user, expire in one year
       await increaseCredits({
         user_uuid: user.uuid,
@@ -36,20 +54,34 @@ export async function saveUser(user: User) {
         credits: CreditsAmount.NewUserGet,
         expired_at: getOneYearLaterTimestr(),
       });
+      console.log('✅ 新用户积分添加成功');
 
       user = {
         ...(dbUser as unknown as User),
       };
     } else {
+      console.log('👤 用户已存在，返回现有用户信息:', {
+        uuid: existUser.uuid,
+        email: existUser.email
+      });
       // user exist, return user info in db
       user = {
         ...(existUser as unknown as User),
       };
     }
 
+    console.log('✅ saveUser 完成:', {
+      uuid: user.uuid,
+      email: user.email
+    });
     return user;
   } catch (e) {
-    console.log("save user failed: ", e);
+    console.error("❌ saveUser 失败:", e);
+    console.error("错误详情:", {
+      message: e.message,
+      stack: e.stack,
+      userEmail: user.email
+    });
     throw e;
   }
 }
