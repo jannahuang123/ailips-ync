@@ -2,6 +2,9 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
+
+// 强制动态渲染
+export const dynamic = 'force-dynamic';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -10,7 +13,9 @@ import { toast } from 'sonner';
 import { Loader2, CreditCard, User, Plus } from 'lucide-react';
 
 export default function AddCreditsPage() {
-  const { data: session, status } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status;
   const [credits, setCredits] = useState(100);
   const [loading, setLoading] = useState(false);
   const [userCredits, setUserCredits] = useState<number | null>(null);
@@ -82,6 +87,11 @@ export default function AddCreditsPage() {
     }
   };
 
+  // 在构建时避免渲染错误
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   if (status === 'loading') {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -90,7 +100,7 @@ export default function AddCreditsPage() {
     );
   }
 
-  if (!session?.user) {
+  if (status === 'unauthenticated' || !session?.user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Card className="w-full max-w-md">

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+
+// 强制动态渲染
+export const dynamic = 'force-dynamic';
 import { signIn } from 'next-auth/react';
 
 interface UserInfo {
@@ -16,7 +19,9 @@ interface UserInfo {
 }
 
 export default function CreditsDebugPage() {
-  const { data: session, status } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status;
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string>('');
@@ -125,6 +130,11 @@ export default function CreditsDebugPage() {
       fetchUserInfo();
     }
   }, [status]);
+
+  // 在构建时避免渲染错误
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   if (status === 'loading') {
     return (

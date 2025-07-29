@@ -3,6 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic';
+
 interface DiagnosisResult {
   user_uuid: string;
   user_email: string;
@@ -27,7 +30,9 @@ interface FixResult {
 }
 
 export default function FixCreditsPage() {
-  const { data: session, status } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status;
   const [diagnosis, setDiagnosis] = useState<DiagnosisResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [fixResult, setFixResult] = useState<FixResult | null>(null);
@@ -130,6 +135,11 @@ export default function FixCreditsPage() {
       getDiagnosis();
     }
   }, [status]);
+
+  // 在构建时避免渲染错误
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   if (status === 'loading') {
     return (

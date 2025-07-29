@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
 
+// 强制动态渲染
+export const dynamic = 'force-dynamic';
+
 interface UserCredits {
   user_uuid: string;
   credits: number;
@@ -24,7 +27,9 @@ interface AddCreditsResponse {
 }
 
 export default function TestCreditsPage() {
-  const { data: session, status } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
+  const status = sessionResult?.status;
   const [userCredits, setUserCredits] = useState<UserCredits | null>(null);
   const [loading, setLoading] = useState(false);
   const [creditsToAdd, setCreditsToAdd] = useState(100);
@@ -97,6 +102,11 @@ export default function TestCreditsPage() {
       fetchUserCredits();
     }
   }, [status]);
+
+  // 在构建时避免渲染错误
+  if (typeof window === 'undefined') {
+    return null;
+  }
 
   if (status === 'loading') {
     return (
