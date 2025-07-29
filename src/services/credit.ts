@@ -19,6 +19,9 @@ export enum CreditsTransType {
   LipSyncMedium = "lipsync_medium", // cost for medium quality lip sync
   LipSyncHigh = "lipsync_high", // cost for high quality lip sync
   LipSyncUltra = "lipsync_ultra", // cost for ultra quality lip sync
+  ShareReward = "share_reward", // reward for sharing on social media
+  DailyLogin = "daily_login", // daily login bonus
+  InviteReward = "invite_reward", // reward for successful invite
 }
 
 export enum CreditsAmount {
@@ -32,6 +35,11 @@ export enum CreditsAmount {
   LipSyncMediumCost = 10,
   LipSyncHighCost = 20,
   LipSyncUltraCost = 30,
+  // Social sharing rewards
+  ShareReward = 10,      // Reward for sharing on social media
+  DailyLoginBonus = 2,   // Daily login bonus (first 7 days)
+  // Invite rewards
+  InviteReward = 30,     // Reward for inviter when invitee makes first purchase (3 free videos)
 }
 
 export async function getUserCredits(user_uuid: string): Promise<UserCredits> {

@@ -6,6 +6,8 @@ import { AffiliateStatus } from "./constant";
 import { Order } from "@/types/order";
 import { findUserByUuid } from "@/models/user";
 import { getIsoTimestr } from "@/lib/time";
+import { increaseCredits, CreditsTransType, CreditsAmount } from "./credit";
+import { getOneYearLaterTimestr } from "@/lib/time";
 
 export async function updateAffiliateForOrder(order: Order) {
   try {
@@ -16,6 +18,7 @@ export async function updateAffiliateForOrder(order: Order) {
         return;
       }
 
+      // 记录邀请关系
       await insertAffiliate({
         user_uuid: user.uuid,
         invited_by: user.invited_by,
@@ -26,6 +29,18 @@ export async function updateAffiliateForOrder(order: Order) {
         reward_percent: AffiliateRewardPercent.Paied,
         reward_amount: AffiliateRewardAmount.Paied,
       });
+
+      // 给邀请人发放积分奖励
+      console.log(`🎁 被邀请人 ${user.uuid} 首次付费，给邀请人 ${user.invited_by} 发放 ${CreditsAmount.InviteReward} 积分奖励`);
+
+      await increaseCredits({
+        user_uuid: user.invited_by,
+        trans_type: CreditsTransType.InviteReward,
+        credits: CreditsAmount.InviteReward,
+        expired_at: getOneYearLaterTimestr(),
+      });
+
+      console.log(`✅ 成功为邀请人 ${user.invited_by} 发放 ${CreditsAmount.InviteReward} 积分奖励`);
     }
   } catch (e) {
     console.log("update affiliate for order failed: ", e);

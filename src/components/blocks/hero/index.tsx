@@ -5,6 +5,7 @@ import HeroBg from "./bg";
 import { Hero as HeroType } from "@/types/blocks/hero";
 import Icon from "@/components/icon";
 import { Link } from "@/i18n/navigation";
+import ShareRewardButton from "./share-reward-button";
 
 export default function Hero({ hero }: { hero: HeroType }) {
   if (hero.disabled) {
@@ -65,6 +66,18 @@ export default function Hero({ hero }: { hero: HeroType }) {
             {hero.buttons && (
               <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
                 {hero.buttons.map((item, i) => {
+                  // 如果是分享奖励按钮，使用特殊组件
+                  if (item.url === "#share-reward") {
+                    return (
+                      <ShareRewardButton
+                        key={i}
+                        title={item.title}
+                        icon={item.icon}
+                        variant={item.variant || "default"}
+                      />
+                    );
+                  }
+
                   return (
                     <Link
                       key={i}
