@@ -177,12 +177,37 @@ https://ailips-ync.vercel.app/api/auth/callback/google
 2. 确认 OAuth 同意屏幕已发布
 3. 验证授权域配置
 
+## 🎯 **重要补充：Supabase 重定向 URL 配置**
+
+**您发现了关键问题！** Supabase 也需要配置允许的重定向 URL。
+
+### 立即配置 Supabase
+
+1. **登录 Supabase Dashboard**: https://supabase.com/dashboard
+2. **选择项目 > Authentication > Settings**
+3. **配置 Site URL**: `https://ailips-ync.vercel.app`
+4. **添加重定向 URLs** (点击 "Add new redirect URLs"):
+   ```
+   https://ailips-ync.vercel.app/api/auth/callback/google
+   https://ailips-ync.vercel.app/api/auth/callback/supabase
+   https://ailips-ync.vercel.app/auth/callback
+   https://ailips-ync.vercel.app/
+   http://localhost:3000/api/auth/callback/google
+   http://localhost:3000/api/auth/callback/supabase
+   http://localhost:3000/auth/callback
+   http://localhost:3000/
+   ```
+5. **保存配置并等待 1-2 分钟生效**
+
+详细配置指南：`SUPABASE_REDIRECT_URL_CONFIG.md`
+
 ## ✅ 验证清单
 
 - [ ] Google Cloud Console 项目已创建
 - [ ] OAuth 同意屏幕已配置
 - [ ] OAuth 2.0 客户端 ID 已创建
 - [ ] 重定向 URI 配置正确
+- [ ] **Supabase 重定向 URL 已配置** ⭐ **新增**
 - [ ] 环境变量已更新 (本地和 Vercel)
 - [ ] 代码已重新部署
 - [ ] 登录流程测试通过
