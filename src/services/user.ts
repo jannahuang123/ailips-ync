@@ -9,6 +9,7 @@ import { headers } from "next/headers";
 import { increaseCredits } from "./credit";
 import { users } from "@/db/schema";
 import { getUuid } from "@/lib/hash";
+import { processShareReward } from "./share-reward";
 
 // save user to database, if user not exist, create a new user
 export async function saveUser(user: User) {

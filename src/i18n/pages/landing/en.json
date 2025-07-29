@@ -36,18 +36,11 @@
     },
     "buttons": [
       {
-        "title": "Free Trial",
-        "url": "/create",
+        "title": "Share & Get Credits",
+        "url": "/share-credits",
         "target": "_self",
         "variant": "default",
-        "icon": "RiPlayFill"
-      },
-      {
-        "title": "Earn Credits",
-        "url": "#share-reward",
-        "target": "_self",
-        "variant": "outline",
-        "icon": "RiGiftLine"
+        "icon": "RiShareLine"
       }
     ],
     "show_sign": true,
@@ -60,22 +53,22 @@
     "description": "Transform any video with perfect lip synchronization using cutting-edge AI technology.<br/>Upload your video and audio files, get Hollywood-quality results in minutes.",
     "announcement": {
       "label": "NEW",
-      "title": "🎁 Share & Get 10 Free Credits",
-      "url": "#share-reward"
+      "title": "🚀 seo3 AI Integration",
+      "url": "/#demo"
     },
-    "tip": "🎁 Start with 50 free credits + earn more by sharing",
+    "tip": "🎁 Share to earn free credits - No payment required!",
     "buttons": [
       {
-        "title": "Start Free Trial",
-        "icon": "RiPlayFill",
-        "url": "/create",
+        "title": "Share & Get Free Credits",
+        "icon": "RiShareLine",
+        "url": "/share-credits",
         "target": "_self",
         "variant": "default"
       },
       {
-        "title": "Share & Earn Credits",
-        "icon": "RiShareLine",
-        "url": "#share-reward",
+        "title": "Watch Demo",
+        "icon": "RiVideoFill",
+        "url": "/#demo",
         "target": "_self",
         "variant": "outline"
       }

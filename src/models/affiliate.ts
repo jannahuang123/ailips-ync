@@ -60,7 +60,7 @@ export async function getAffiliateSummary(user_uuid: string) {
   const summary = {
     total_invited: 0,
     total_paid: 0,
-    total_reward: 0, // 现在表示积分奖励总数
+    total_reward: 0,
   };
 
   const invited_users = new Set();
@@ -71,8 +71,7 @@ export async function getAffiliateSummary(user_uuid: string) {
     if (item.paid_amount > 0) {
       paid_users.add(item.user_uuid);
 
-      // 每个付费用户给邀请人30积分奖励
-      summary.total_reward += 30; // CreditsAmount.InviteReward
+      summary.total_reward += item.reward_amount;
     }
   });
 

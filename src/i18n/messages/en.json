@@ -93,11 +93,11 @@
     "edit_invite_link": "Edit Invite Link",
     "copy_invite_link": "Copy Invite Link",
     "invite_code": "Invite Code",
-    "invite_tip": "Invite 1 friend to buy LipSyncVideo credits, earn 30 credits (3 free videos).",
-    "invite_balance": "Invite Reward Credits",
+    "invite_tip": "Invite 1 friend to buy LipSyncVideo credits, reward $50.",
+    "invite_balance": "Invite Reward Balance",
     "total_invite_count": "Total Invite Count",
     "total_paid_count": "Total Paid Count",
-    "total_award_amount": "Total Award Credits",
+    "total_award_amount": "Total Award Amount",
     "update_invite_code": "Set Invite Code",
     "update_invite_code_tip": "Input your custom invite code",
     "update_invite_button": "Save",
@@ -108,7 +108,7 @@
       "invite_user": "Invite User",
       "status": "Status",
       "reward_percent": "Reward Percent",
-      "reward_amount": "Reward Credits",
+      "reward_amount": "Reward Amount",
       "pending": "Pending",
       "completed": "Completed"
     }

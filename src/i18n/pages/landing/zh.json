@@ -36,11 +36,11 @@
     },
     "buttons": [
       {
-        "title": "免费试用",
-        "url": "/create",
+        "title": "分享获得积分",
+        "url": "/share-credits",
         "target": "_self",
         "variant": "default",
-        "icon": "RiPlayFill"
+        "icon": "RiShareLine"
       }
     ],
     "show_sign": true,
@@ -56,12 +56,12 @@
       "title": "🚀 HeyGen AI 集成",
       "url": "/#demo"
     },
-    "tip": "🎁 新用户免费获得 50 积分",
+    "tip": "🎁 分享即可获得免费积分 - 无需付费！",
     "buttons": [
       {
-        "title": "创建唇语同步视频",
-        "icon": "RiPlayFill",
-        "url": "/create",
+        "title": "分享获得免费积分",
+        "icon": "RiShareLine",
+        "url": "/share-credits",
         "target": "_self",
         "variant": "default"
       },
