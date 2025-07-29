@@ -63,7 +63,38 @@
 6. **获取客户端 ID 和密钥**
    - 创建完成后，复制 `客户端 ID` 和 `客户端密钥`
 
-### 步骤 2: 更新环境变量
+## 🔧 **第二步：Supabase 认证 URL 配置** ⭐
+
+### **重要！Supabase 需要配置的 URL**
+
+1. **访问 Supabase Dashboard**
+   ```
+   https://supabase.com/dashboard/project/[YOUR-PROJECT-ID]/auth/url-configuration
+   ```
+
+2. **配置 Site URL (主站点 URL)**
+   ```
+   https://ailips-ync.vercel.app
+   ```
+
+3. **配置 Redirect URLs (重定向 URL 列表)**
+   ```
+   # 生产环境
+   https://ailips-ync.vercel.app/**
+
+   # 开发环境
+   http://localhost:3000/**
+
+   # Vercel 预览环境 (可选)
+   https://*-jannahuang123.vercel.app/**
+   ```
+
+### **为什么需要配置这些 URL？**
+- **Site URL**: Supabase 认证的默认重定向地址
+- **Redirect URLs**: 允许的重定向地址白名单
+- **通配符 `**`**: 支持所有子路径，包括 `/api/auth/callback/google`
+
+### 步骤 3: 更新环境变量
 
 编辑 `.env.local` 文件：
 
@@ -84,7 +115,7 @@ NEXT_PUBLIC_AUTH_GOOGLE_ENABLED="true"
 DATABASE_URL="postgresql://postgres.hqdberrfnpamslupzvwt:Hzz123456@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres"
 ```
 
-### 步骤 3: 配置 Vercel 环境变量
+### 步骤 4: 配置 Vercel 环境变量
 
 在 Vercel 项目设置中添加相同的环境变量：
 
