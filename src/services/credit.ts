@@ -22,7 +22,7 @@ export enum CreditsTransType {
 }
 
 export enum CreditsAmount {
-  NewUserGet = 10, // Adjusted for Veo3 cost (1 free video)
+  NewUserGet = 50, // Increased for better user experience (5 free videos)
   PingCost = 1,
   Veo3StandardCost = 10, // $0.50 per video (1 RMB ≈ $0.14 + margin)
   Veo3PremiumCost = 15,  // Premium features + priority queue
