@@ -16,13 +16,18 @@ import { getTranslations } from "next-intl/server";
 import moment from "moment";
 import { redirect } from "next/navigation";
 
-export default async function () {
+export default async function ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const t = await getTranslations();
 
   const user_uuid = await getUserUuid();
   const user_email = await getUserEmail();
 
-  const callbackUrl = `${process.env.NEXT_PUBLIC_WEB_URL}/my-invites`;
+  const callbackUrl = `${process.env.NEXT_PUBLIC_WEB_URL}/${locale}/my-invites`;
   if (!user_uuid) {
     redirect(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   }

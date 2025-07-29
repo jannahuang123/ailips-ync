@@ -5,7 +5,7 @@ import { getUserUuid } from "@/services/user";
 import { getUserCredits } from "@/services/credit";
 import { User } from "@/types/user";
 
-export async function POST(req: Request) {
+async function getUserInfoHandler() {
   try {
     const user_uuid = await getUserUuid();
     if (!user_uuid) {
@@ -29,4 +29,12 @@ export async function POST(req: Request) {
     console.log("get user info failed: ", e);
     return respErr("get user info failed");
   }
+}
+
+export async function POST(req: Request) {
+  return getUserInfoHandler();
+}
+
+export async function GET(req: Request) {
+  return getUserInfoHandler();
 }

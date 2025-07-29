@@ -145,11 +145,37 @@ export const authOptions: NextAuthConfig = {
       }
     },
     async redirect({ url, baseUrl }) {
+      console.log('🔄 Redirect Callback:', { url, baseUrl });
+
       // Allows relative callback URLs
-      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      if (url.startsWith("/")) {
+        // 处理国际化路由：如果URL不包含locale，添加默认locale
+        if (url === "/" || url.startsWith("/?")) {
+          const redirectUrl = `${baseUrl}/en`;
+          console.log('✅ 重定向到首页:', redirectUrl);
+          return redirectUrl;
+        }
+
+        // 如果是 /create 这样的路径，添加默认locale
+        if (!url.match(/^\/(en|zh|ja|ko|ru|fr|de|ar|es|it)/)) {
+          const redirectUrl = `${baseUrl}/en${url}`;
+          console.log('✅ 添加locale重定向:', redirectUrl);
+          return redirectUrl;
+        }
+
+        const redirectUrl = `${baseUrl}${url}`;
+        console.log('✅ 相对路径重定向:', redirectUrl);
+        return redirectUrl;
+      }
+
       // Allows callback URLs on the same origin
-      else if (new URL(url).origin === baseUrl) return url;
-      return baseUrl;
+      else if (new URL(url).origin === baseUrl) {
+        console.log('✅ 同源重定向:', url);
+        return url;
+      }
+
+      console.log('✅ 默认重定向到首页:', `${baseUrl}/en`);
+      return `${baseUrl}/en`;
     },
     async session({ session, token, user }) {
       console.log('🎫 Session Callback:', {
@@ -161,14 +187,17 @@ export const authOptions: NextAuthConfig = {
         tokenUserUuid: (token?.user as any)?.uuid
       });
 
-      if (token && token.user && token.user) {
+      if (token && token.user) {
         session.user = token.user;
         console.log('✅ Session 用户信息已设置:', {
           email: session.user.email,
           uuid: session.user.uuid
         });
       } else {
-        console.log('⚠️ Session 缺少用户信息');
+        console.log('⚠️ Session 缺少用户信息:', {
+          hasToken: !!token,
+          hasTokenUser: !!(token?.user)
+        });
       }
       return session;
     },
