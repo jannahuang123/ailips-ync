@@ -67,8 +67,8 @@ export async function handleSignInUser(
   } catch (e) {
     console.error("❌ handleSignInUser 失败:", e);
     console.error("错误详情:", {
-      message: e.message,
-      stack: e.stack,
+      message: e instanceof Error ? e.message : String(e),
+      stack: e instanceof Error ? e.stack : undefined,
       userEmail: user?.email,
       provider: account?.provider
     });

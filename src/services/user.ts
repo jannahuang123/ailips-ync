@@ -78,8 +78,8 @@ export async function saveUser(user: User) {
   } catch (e) {
     console.error("❌ saveUser 失败:", e);
     console.error("错误详情:", {
-      message: e.message,
-      stack: e.stack,
+      message: e instanceof Error ? e.message : String(e),
+      stack: e instanceof Error ? e.stack : undefined,
       userEmail: user.email
     });
     throw e;

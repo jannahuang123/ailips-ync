@@ -157,8 +157,8 @@ export const authOptions: NextAuthConfig = {
         hasToken: !!token,
         hasTokenUser: !!token?.user,
         sessionUserEmail: session?.user?.email,
-        tokenUserEmail: token?.user?.email,
-        tokenUserUuid: token?.user?.uuid
+        tokenUserEmail: (token?.user as any)?.email,
+        tokenUserUuid: (token?.user as any)?.uuid
       });
 
       if (token && token.user && token.user) {
@@ -221,8 +221,8 @@ export const authOptions: NextAuthConfig = {
       } catch (e) {
         console.error("❌ JWT callback 错误:", e);
         console.error("错误详情:", {
-          message: e.message,
-          stack: e.stack,
+          message: e instanceof Error ? e.message : String(e),
+          stack: e instanceof Error ? e.stack : undefined,
           userEmail: user?.email,
           provider: account?.provider
         });
