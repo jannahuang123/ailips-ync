@@ -68,7 +68,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
           email: "dev-test@example.com",
           nickname: "开发测试用户",
           avatar_url: "https://via.placeholder.com/150",
-          credits: 100, // 模拟100积分用于测试
+          credits: {
+            left_credits: 100,
+            is_pro: true,
+            is_recharged: false,
+            total_credits: 100,
+            used_credits: 0,
+            free_credits: 100
+          }, // 模拟积分对象用于测试
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
