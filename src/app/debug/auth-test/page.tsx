@@ -16,8 +16,11 @@ export default function AuthTestPage() {
   const { data: session, status } = useSession();
   const [authInfo, setAuthInfo] = useState<any>(null);
   const [providers, setProviders] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     // 获取认证提供商信息
     fetch('/api/auth/providers')
       .then(res => res.json())
@@ -30,6 +33,22 @@ export default function AuthTestPage() {
       .then(data => setAuthInfo(data))
       .catch(err => console.error('获取会话失败:', err));
   }, []);
+
+  // 防止服务器端渲染时的水合错误
+  if (!mounted) {
+    return (
+      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white shadow rounded-lg p-6">
+            <h1 className="text-2xl font-bold text-gray-900 mb-6">
+              🔍 Google OAuth 认证测试
+            </h1>
+            <p>加载中...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const handleGoogleSignIn = () => {
     console.log('🚀 开始 Google 登录...');
