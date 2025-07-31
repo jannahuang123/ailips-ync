@@ -134,15 +134,3 @@ export async function getUserCountByDate(
 
   return dateCountMap;
 }
-
-export async function getUsersInvitedBy(
-  inviterUuid: string
-): Promise<(typeof users.$inferSelect)[] | undefined> {
-  const data = await db()
-    .select()
-    .from(users)
-    .where(eq(users.invited_by, inviterUuid))
-    .orderBy(desc(users.created_at));
-
-  return data;
-}

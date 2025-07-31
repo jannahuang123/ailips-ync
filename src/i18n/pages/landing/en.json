@@ -37,7 +37,7 @@
     "buttons": [
       {
         "title": "Share & Get Credits",
-        "url": "/share-credits",
+        "url": "/my-invites",
         "target": "_self",
         "variant": "default",
         "icon": "RiShareLine"
@@ -56,12 +56,12 @@
       "title": "🚀 seo3 AI Integration",
       "url": "/#demo"
     },
-    "tip": "🎁 Share to earn free credits - No payment required!",
+    "tip": "🎁 Start with 50 free credits",
     "buttons": [
       {
-        "title": "Share & Get Free Credits",
+        "title": "Share & Get Credits",
         "icon": "RiShareLine",
-        "url": "/share-credits",
+        "url": "/my-invites",
         "target": "_self",
         "variant": "default"
       },
@@ -366,14 +366,14 @@
   },
   "cta": {
     "name": "cta",
-    "title": "Create Your First AI Lip Sync Video",
-    "description": "Transform your content with professional AI lip synchronization.",
+    "title": "Share & Earn Free Credits",
+    "description": "Invite friends and earn credits for every successful referral.",
     "buttons": [
       {
-        "title": "Start Creating",
-        "url": "/create",
+        "title": "Share & Get Credits",
+        "url": "/my-invites",
         "target": "_self",
-        "icon": "RiPlayFill"
+        "icon": "RiShareLine"
       },
       {
         "title": "View Pricing",

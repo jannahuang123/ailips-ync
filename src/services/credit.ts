@@ -19,9 +19,6 @@ export enum CreditsTransType {
   LipSyncMedium = "lipsync_medium", // cost for medium quality lip sync
   LipSyncHigh = "lipsync_high", // cost for high quality lip sync
   LipSyncUltra = "lipsync_ultra", // cost for ultra quality lip sync
-  // Share reward types (simplified, no commission)
-  ShareReward = "share_reward", // reward for successful referral
-  ReferralBonus = "referral_bonus", // bonus for multiple referrals
 }
 
 export enum CreditsAmount {
@@ -35,9 +32,6 @@ export enum CreditsAmount {
   LipSyncMediumCost = 10,
   LipSyncHighCost = 20,
   LipSyncUltraCost = 30,
-  // Share reward amounts (simplified, no commission)
-  ShareRewardAmount = 20, // reward for each successful referral
-  ReferralBonusAmount = 50, // bonus for first 10 referrals
 }
 
 export async function getUserCredits(user_uuid: string): Promise<UserCredits> {

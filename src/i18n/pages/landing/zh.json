@@ -36,8 +36,8 @@
     },
     "buttons": [
       {
-        "title": "分享获得积分",
-        "url": "/share-credits",
+        "title": "分享获得免费积分",
+        "url": "/my-invites",
         "target": "_self",
         "variant": "default",
         "icon": "RiShareLine"
@@ -56,12 +56,12 @@
       "title": "🚀 HeyGen AI 集成",
       "url": "/#demo"
     },
-    "tip": "🎁 分享即可获得免费积分 - 无需付费！",
+    "tip": "🎁 新用户免费获得 50 积分",
     "buttons": [
       {
         "title": "分享获得免费积分",
         "icon": "RiShareLine",
-        "url": "/share-credits",
+        "url": "/my-invites",
         "target": "_self",
         "variant": "default"
       },
@@ -366,18 +366,18 @@
   },
   "cta": {
     "name": "cta",
-    "title": "启动您的第一个 AI SaaS 创业项目",
-    "description": "从这里开始，使用 ShipAny 启动。",
+    "title": "分享获得免费积分",
+    "description": "邀请朋友注册，每成功邀请一人即可获得积分奖励。",
     "buttons": [
       {
-        "title": "获取 ShipAny",
-        "url": "https://shipany.ai",
-        "target": "_blank",
-        "icon": "GoArrowUpRight"
+        "title": "分享获得免费积分",
+        "url": "/my-invites",
+        "target": "_self",
+        "icon": "RiShareLine"
       },
       {
-        "title": "阅读文档",
-        "url": "https://docs.shipany.ai",
+        "title": "查看定价",
+        "url": "/pricing",
         "target": "_blank",
         "variant": "outline"
       }

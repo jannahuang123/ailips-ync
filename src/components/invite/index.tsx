@@ -100,7 +100,11 @@ export default function Invite({ summary }: { summary: any }) {
             )}
           </div>
         )}
-        <p className="text-sm text-gray-500">{t("my_invites.invite_tip")}</p>
+        <div className="space-y-2">
+          <p className="text-sm text-gray-500">{t("my_invites.invite_tip")}</p>
+          <p className="text-sm text-primary font-medium">{t("my_invites.credits_per_invite")}</p>
+          <p className="text-xs text-gray-400">{t("my_invites.share_tip")}</p>
+        </div>
       </Card>
 
       {/* 右侧奖励卡片 */}
@@ -110,7 +114,7 @@ export default function Invite({ summary }: { summary: any }) {
             <h2 className="text-sm text-gray-500 mb-4">
               {t("my_invites.invite_balance")}
             </h2>
-            <p className="text-4xl font-bold">${summary.total_reward / 100}</p>
+            <p className="text-4xl font-bold">{summary.total_reward || 0} <span className="text-lg">积分</span></p>
           </div>
           {/* <Button className="" size="sm">
             奖励提现
@@ -131,7 +135,7 @@ export default function Invite({ summary }: { summary: any }) {
             </p>
           </div>
           <div>
-            <p className="text-2xl font-bold">${summary.total_reward / 100}</p>
+            <p className="text-2xl font-bold">{summary.total_reward || 0} 积分</p>
             <p className="text-sm text-gray-500">
               {t("my_invites.total_award_amount")}
             </p>

@@ -37,51 +37,9 @@ export default async function ({
     redirect(`/auth/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   }
 
-  let orders = await getOrdersByUserUuid(user_uuid);
-  if (!orders || orders.length === 0) {
-    orders = await getOrdersByPaidEmail(user_email);
-  }
-
+  // 简化的积分奖励系统：所有用户都可以邀请朋友获得积分
+  // 移除复杂的购买限制和分佣机制
   user.is_affiliate = true;
-
-  if (!orders || orders.length === 0) {
-    // not bought
-    if (!user.is_affiliate) {
-      // no right
-      return (
-        <div className="text-center flex flex-col items-center justify-center h-full py-16 gap-4">
-          <RiEmotionSadFill className="w-8 h-8" />
-          <span>{t("my_invites.no_orders")}</span>
-        </div>
-      );
-    }
-  } else {
-    // bought
-    let is_affiliate = false;
-    for (const order of orders) {
-      if (order.product_id === "premium") {
-        is_affiliate = true;
-        break;
-      }
-    }
-
-    if (!is_affiliate && !user.is_affiliate) {
-      return (
-        <div className="text-center flex flex-col items-center justify-center h-full py-16 gap-4">
-          <RiEmotionSadFill className="w-8 h-8" />
-          <span>{t("my_invites.no_affiliates")}</span>
-          <Link
-            href="https://discord.gg/HQNnrzjZQS"
-            target="_blank"
-            className="flex items-center gap-1 font-semibold text-sm text-primary border border-primary rounded-md px-4 py-2"
-          >
-            <RiDiscordFill className="text-xl" />
-            Discord
-          </Link>
-        </div>
-      );
-    }
-  }
 
   const affiliates = await getAffiliatesByUserUuid(user_uuid);
 
@@ -119,7 +77,7 @@ export default async function ({
     {
       name: "reward_amount",
       title: t("my_invites.table.reward_amount"),
-      callback: (item) => `$${item.reward_amount / 100}`,
+      callback: (item) => `${item.reward_amount || 50} 积分`,
     },
   ];
 
