@@ -80,7 +80,9 @@ if (
 if (
   process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED === "true" &&
   process.env.AUTH_GOOGLE_ID &&
-  process.env.AUTH_GOOGLE_SECRET
+  process.env.AUTH_GOOGLE_SECRET &&
+  process.env.AUTH_GOOGLE_ID !== "your-google-client-id.apps.googleusercontent.com" &&
+  process.env.AUTH_GOOGLE_SECRET !== "your-google-client-secret"
 ) {
   providers.push(
     GoogleProvider({
@@ -88,6 +90,8 @@ if (
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
     })
   );
+} else {
+  console.log('⚠️ Google OAuth 未正确配置，跳过 Google 登录提供商');
 }
 
 // Github Auth

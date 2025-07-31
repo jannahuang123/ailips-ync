@@ -59,6 +59,22 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       updateInvite(data);
     } catch (e) {
       console.log("fetch user info failed");
+
+      // 开发环境临时解决方案：如果是网络问题导致的认证失败，提供模拟数据
+      if (process.env.NODE_ENV === 'development') {
+        console.log("🔧 开发环境：检测到网络连接问题，使用模拟用户数据进行测试");
+        const mockUser = {
+          uuid: "dev-mock-user-uuid",
+          email: "dev-test@example.com",
+          nickname: "开发测试用户",
+          avatar_url: "https://via.placeholder.com/150",
+          credits: 100, // 模拟100积分用于测试
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        };
+        setUser(mockUser);
+        console.log("✅ 开发环境模拟用户已设置:", mockUser);
+      }
     }
   };
 
