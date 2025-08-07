@@ -8,6 +8,7 @@ import { Metadata } from "next";
 import { NextAuthSessionProvider } from "@/auth/session";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/providers/theme";
+import AuthStatusDebug from "@/components/debug/AuthStatusDebug";
 
 export async function generateMetadata({
   params,
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
         <AppContextProvider>
           <ThemeProvider attribute="class" disableTransitionOnChange>
             {children}
+            <AuthStatusDebug />
           </ThemeProvider>
         </AppContextProvider>
       </NextAuthSessionProvider>

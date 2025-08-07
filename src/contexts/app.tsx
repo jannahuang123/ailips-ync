@@ -28,7 +28,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     useOneTapLogin();
   }
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   const [theme, setTheme] = useState<string>(() => {
     return process.env.NEXT_PUBLIC_DEFAULT_THEME || "";
@@ -70,6 +70,10 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       if (code === -2) {
         console.log('🔐 用户未登录 (no auth)');
         setUser(null);
+        // 如果用户应该已经登录但API返回未认证，可能是会话过期
+        if (status === 'authenticated') {
+          console.log('⚠️ 会话状态不一致，可能需要重新登录');
+        }
         return;
       }
 
@@ -95,14 +99,14 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         stack: e instanceof Error ? e.stack : undefined
       });
 
-      // 开发环境临时解决方案：如果是网络问题导致的认证失败，提供模拟数据
-      if (process.env.NODE_ENV === 'development') {
-        console.log("🔧 开发环境：检测到网络连接问题，使用模拟用户数据进行测试");
+      // 开发环境临时解决方案：仅在会话状态为已认证但API调用失败时使用模拟数据
+      if (process.env.NODE_ENV === 'development' && status === 'authenticated' && session?.user) {
+        console.log("🔧 开发环境：会话已认证但API调用失败，使用模拟用户数据");
         const mockUser = {
           uuid: "dev-mock-user-uuid",
-          email: "dev-test@example.com",
-          nickname: "开发测试用户",
-          avatar_url: "https://via.placeholder.com/150",
+          email: session.user.email || "dev-test@example.com",
+          nickname: session.user.name || "开发测试用户",
+          avatar_url: session.user.image || "https://via.placeholder.com/150",
           credits: {
             left_credits: 100,
             is_pro: true,
@@ -110,12 +114,15 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
             total_credits: 100,
             used_credits: 0,
             free_credits: 100
-          }, // 模拟积分对象用于测试
+          },
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         };
         setUser(mockUser);
         console.log("✅ 开发环境模拟用户已设置:", mockUser);
+      } else {
+        // 生产环境或用户未认证时，清除用户状态
+        setUser(null);
       }
     }
   };
@@ -173,10 +180,24 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (session && session.user) {
+    console.log('🔄 Session状态变化:', {
+      status,
+      hasSession: !!session,
+      hasUser: !!(session?.user),
+      userEmail: session?.user?.email
+    });
+
+    // 只有在认证完成且有用户信息时才获取用户详情
+    if (status === 'authenticated' && session?.user) {
+      console.log('✅ 会话已认证，开始获取用户信息');
       fetchUserInfo();
+    } else if (status === 'unauthenticated') {
+      console.log('🔐 用户未认证，清除用户状态');
+      setUser(null);
+    } else if (status === 'loading') {
+      console.log('⏳ 会话加载中...');
     }
-  }, [session]);
+  }, [session, status]);
 
   return (
     <AppContext.Provider
