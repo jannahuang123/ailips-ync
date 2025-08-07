@@ -41,24 +41,59 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserInfo = async function () {
     try {
+      console.log('🔍 开始获取用户信息...');
+
       const resp = await fetch("/api/get-user-info", {
         method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
+      console.log('📡 API 响应状态:', resp.status, resp.statusText);
+
       if (!resp.ok) {
-        throw new Error("fetch user info failed with status: " + resp.status);
+        const errorText = await resp.text();
+        console.error('❌ API 请求失败:', {
+          status: resp.status,
+          statusText: resp.statusText,
+          response: errorText
+        });
+        throw new Error(`fetch user info failed with status: ${resp.status} - ${errorText}`);
       }
 
-      const { code, message, data } = await resp.json();
+      const responseData = await resp.json();
+      console.log('📦 API 响应数据:', responseData);
+
+      const { code, message, data } = responseData;
+
+      if (code === -2) {
+        console.log('🔐 用户未登录 (no auth)');
+        setUser(null);
+        return;
+      }
+
       if (code !== 0) {
+        console.error('❌ API 返回错误:', { code, message });
         throw new Error(message);
       }
 
-      setUser(data);
+      console.log('✅ 用户信息获取成功:', {
+        uuid: data?.uuid,
+        email: data?.email,
+        nickname: data?.nickname,
+        credits: data?.credits
+      });
 
+      setUser(data);
       updateInvite(data);
+
     } catch (e) {
-      console.log("fetch user info failed");
+      console.error("❌ fetch user info failed:", e);
+      console.error("错误详情:", {
+        message: e instanceof Error ? e.message : String(e),
+        stack: e instanceof Error ? e.stack : undefined
+      });
 
       // 开发环境临时解决方案：如果是网络问题导致的认证失败，提供模拟数据
       if (process.env.NODE_ENV === 'development') {

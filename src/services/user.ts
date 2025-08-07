@@ -89,22 +89,38 @@ export async function saveUser(user: User) {
 export async function getUserUuid() {
   let user_uuid = "";
 
+  console.log('🔍 getUserUuid 开始执行');
+
   const token = await getBearerToken();
+  console.log('🎫 Bearer Token:', token ? `${token.substring(0, 10)}...` : '无');
 
   if (token) {
     // api key
     if (token.startsWith("sk-")) {
+      console.log('🔑 使用 API Key 认证');
       const user_uuid = await getUserUuidByApiKey(token);
-
+      console.log('👤 API Key 用户 UUID:', user_uuid ? `${user_uuid.substring(0, 8)}...` : '未找到');
       return user_uuid || "";
     }
   }
 
+  console.log('🎫 尝试获取 NextAuth 会话...');
   const session = await auth();
+  console.log('📋 会话状态:', {
+    hasSession: !!session,
+    hasUser: !!(session?.user),
+    hasUuid: !!(session?.user?.uuid),
+    userEmail: session?.user?.email
+  });
+
   if (session && session.user && session.user.uuid) {
     user_uuid = session.user.uuid;
+    console.log('✅ 从会话获取用户 UUID:', `${user_uuid.substring(0, 8)}...`);
+  } else {
+    console.log('❌ 会话中未找到用户 UUID');
   }
 
+  console.log('🔍 getUserUuid 执行完成，返回:', user_uuid ? `${user_uuid.substring(0, 8)}...` : '空');
   return user_uuid;
 }
 
