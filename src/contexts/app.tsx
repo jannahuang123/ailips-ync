@@ -190,8 +190,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       });
     }
 
-    // 只有在认证完成且有用户信息时才获取用户详情
-    if (status === 'authenticated' && session?.user) {
+    // 基于 ShipAny 模板的状态管理优化
+    // 只有在认证完成且有用户信息时才获取用户详情，避免重复调用
+    if (status === 'authenticated' && session?.user && !user) {
       if (typeof window !== 'undefined') {
         console.log('✅ 会话已认证，开始获取用户信息');
       }
@@ -205,8 +206,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       if (typeof window !== 'undefined') {
         console.log('⏳ 会话加载中...');
       }
+    } else if (status === 'authenticated' && session?.user && user) {
+      if (typeof window !== 'undefined') {
+        console.log('✅ 用户信息已存在，跳过重复获取');
+      }
     }
-  }, [session, status]);
+  }, [session, status, user]);
 
   return (
     <AppContext.Provider

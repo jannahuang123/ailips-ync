@@ -100,12 +100,30 @@ if (
   process.env.AUTH_GITHUB_ID &&
   process.env.AUTH_GITHUB_SECRET
 ) {
+  console.log('🔧 配置 GitHub OAuth Provider:', {
+    clientId: process.env.AUTH_GITHUB_ID ? `${process.env.AUTH_GITHUB_ID.substring(0, 10)}...` : '未设置',
+    hasSecret: !!process.env.AUTH_GITHUB_SECRET
+  });
+
   providers.push(
     GitHubProvider({
       clientId: process.env.AUTH_GITHUB_ID,
       clientSecret: process.env.AUTH_GITHUB_SECRET,
+      authorization: {
+        params: {
+          scope: "read:user user:email"
+        }
+      }
     })
   );
+  console.log('✅ GitHub OAuth Provider 已添加');
+} else {
+  console.log('⚠️ GitHub OAuth 未正确配置，跳过 GitHub 登录提供商');
+  console.log('配置检查:', {
+    enabled: process.env.NEXT_PUBLIC_AUTH_GITHUB_ENABLED,
+    hasClientId: !!process.env.AUTH_GITHUB_ID,
+    hasSecret: !!process.env.AUTH_GITHUB_SECRET
+  });
 }
 
 export const providerMap = providers
