@@ -136,10 +136,19 @@ export const authOptions: NextAuthConfig = {
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        // 生产环境使用主域名，开发环境不设置域名
-        domain: process.env.NODE_ENV === 'production'
-          ? 'lipsyncvideo.net'
-          : undefined,
+        // 不设置域名，让浏览器自动处理
+        // domain: undefined,
+      },
+    },
+    csrfToken: {
+      name: process.env.NODE_ENV === 'production'
+        ? '__Host-next-auth.csrf-token'
+        : 'next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
       },
     },
   },

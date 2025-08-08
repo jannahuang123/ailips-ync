@@ -110,7 +110,9 @@ export async function getUserUuid() {
     hasSession: !!session,
     hasUser: !!(session?.user),
     hasUuid: !!(session?.user?.uuid),
-    userEmail: session?.user?.email
+    userEmail: session?.user?.email,
+    sessionKeys: session ? Object.keys(session) : [],
+    userKeys: session?.user ? Object.keys(session.user) : []
   });
 
   if (session && session.user && session.user.uuid) {
