@@ -148,13 +148,40 @@ export const authOptions: NextAuthConfig = {
   },
   cookies: {
     sessionToken: {
-      name: `next-auth.session-token`,
+      name: process.env.NODE_ENV === 'production'
+        ? `__Secure-next-auth.session-token`
+        : `next-auth.session-token`,
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: true,
-        // 不设置 domain，让浏览器自动处理
+        secure: process.env.NODE_ENV === 'production',
+        // 基于 ShipAny 模板：移除域名设置，让浏览器自动处理
+        // domain: undefined
+      }
+    },
+    callbackUrl: {
+      name: process.env.NODE_ENV === 'production'
+        ? `__Secure-next-auth.callback-url`
+        : `next-auth.callback-url`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production',
+        // 基于 ShipAny 模板：移除域名设置，让浏览器自动处理
+        // domain: undefined
+      }
+    },
+    csrfToken: {
+      name: process.env.NODE_ENV === 'production'
+        ? `__Host-next-auth.csrf-token`
+        : `next-auth.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === 'production'
       }
     }
   },
