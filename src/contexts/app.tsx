@@ -180,38 +180,24 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    // 避免在服务端渲染时执行日志，防止 Hydration 不匹配
-    if (typeof window !== 'undefined') {
-      console.log('🔄 Session状态变化:', {
-        status,
-        hasSession: !!session,
-        hasUser: !!(session?.user),
-        userEmail: session?.user?.email
-      });
-    }
+    console.log('🔄 Session状态变化:', {
+      status,
+      hasSession: !!session,
+      hasUser: !!(session?.user),
+      userEmail: session?.user?.email
+    });
 
-    // 基于 ShipAny 模板的状态管理优化
-    // 只有在认证完成且有用户信息时才获取用户详情，避免重复调用
-    if (status === 'authenticated' && session?.user && !user) {
-      if (typeof window !== 'undefined') {
-        console.log('✅ 会话已认证，开始获取用户信息');
-      }
+    // 只有在认证完成且有用户信息时才获取用户详情
+    if (status === 'authenticated' && session?.user) {
+      console.log('✅ 会话已认证，开始获取用户信息');
       fetchUserInfo();
     } else if (status === 'unauthenticated') {
-      if (typeof window !== 'undefined') {
-        console.log('🔐 用户未认证，清除用户状态');
-      }
+      console.log('🔐 用户未认证，清除用户状态');
       setUser(null);
     } else if (status === 'loading') {
-      if (typeof window !== 'undefined') {
-        console.log('⏳ 会话加载中...');
-      }
-    } else if (status === 'authenticated' && session?.user && user) {
-      if (typeof window !== 'undefined') {
-        console.log('✅ 用户信息已存在，跳过重复获取');
-      }
+      console.log('⏳ 会话加载中...');
     }
-  }, [session, status, user]);
+  }, [session, status]);
 
   return (
     <AppContext.Provider

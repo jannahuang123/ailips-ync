@@ -3,7 +3,7 @@
 import { useAuthStatus } from "@/hooks/useAuthStatus";
 import { useSession } from "next-auth/react";
 import { useAppContext } from "@/contexts/app";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -17,15 +17,9 @@ export default function AuthStatusDebug() {
   const { user } = useAppContext();
   const authStatus = useAuthStatus();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isClient, setIsClient] = useState(false);
 
-  // 确保只在客户端渲染，避免 Hydration 不匹配
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  // 仅在开发环境和客户端显示
-  if (!isClient || process.env.NODE_ENV !== 'development') {
+  // 仅在开发环境显示
+  if (process.env.NODE_ENV !== 'development') {
     return null;
   }
 

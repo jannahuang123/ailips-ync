@@ -100,30 +100,12 @@ if (
   process.env.AUTH_GITHUB_ID &&
   process.env.AUTH_GITHUB_SECRET
 ) {
-  console.log('🔧 配置 GitHub OAuth Provider:', {
-    clientId: process.env.AUTH_GITHUB_ID ? `${process.env.AUTH_GITHUB_ID.substring(0, 10)}...` : '未设置',
-    hasSecret: !!process.env.AUTH_GITHUB_SECRET
-  });
-
   providers.push(
     GitHubProvider({
       clientId: process.env.AUTH_GITHUB_ID,
       clientSecret: process.env.AUTH_GITHUB_SECRET,
-      authorization: {
-        params: {
-          scope: "read:user user:email"
-        }
-      }
     })
   );
-  console.log('✅ GitHub OAuth Provider 已添加');
-} else {
-  console.log('⚠️ GitHub OAuth 未正确配置，跳过 GitHub 登录提供商');
-  console.log('配置检查:', {
-    enabled: process.env.NEXT_PUBLIC_AUTH_GITHUB_ENABLED,
-    hasClientId: !!process.env.AUTH_GITHUB_ID,
-    hasSecret: !!process.env.AUTH_GITHUB_SECRET
-  });
 }
 
 export const providerMap = providers
@@ -142,48 +124,30 @@ export const authOptions: NextAuthConfig = {
   pages: {
     signIn: "/auth/signin",
   },
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
+
+  // 修复 Cookie 配置以解决会话状态丢失问题
   cookies: {
     sessionToken: {
       name: process.env.NODE_ENV === 'production'
-        ? `__Secure-next-auth.session-token`
-        : `next-auth.session-token`,
+        ? '__Secure-next-auth.session-token'
+        : 'next-auth.session-token',
       options: {
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        // 基于 ShipAny 模板：移除域名设置，让浏览器自动处理
-        // domain: undefined
-      }
+        // 生产环境使用主域名，开发环境不设置域名
+        domain: process.env.NODE_ENV === 'production'
+          ? 'lipsyncvideo.net'
+          : undefined,
+      },
     },
-    callbackUrl: {
-      name: process.env.NODE_ENV === 'production'
-        ? `__Secure-next-auth.callback-url`
-        : `next-auth.callback-url`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production',
-        // 基于 ShipAny 模板：移除域名设置，让浏览器自动处理
-        // domain: undefined
-      }
-    },
-    csrfToken: {
-      name: process.env.NODE_ENV === 'production'
-        ? `__Host-next-auth.csrf-token`
-        : `next-auth.csrf-token`,
-      options: {
-        httpOnly: true,
-        sameSite: 'lax',
-        path: '/',
-        secure: process.env.NODE_ENV === 'production'
-      }
-    }
+  },
+
+  // 会话配置
+  session: {
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {

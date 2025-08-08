@@ -105,46 +105,19 @@ export async function getUserUuid() {
   }
 
   console.log('🎫 尝试获取 NextAuth 会话...');
-  try {
-    const session = await auth();
-    console.log('📋 会话状态:', {
-      hasSession: !!session,
-      hasUser: !!(session?.user),
-      hasUuid: !!(session?.user?.uuid),
-      userEmail: session?.user?.email,
-      sessionKeys: session ? Object.keys(session) : [],
-      userKeys: session?.user ? Object.keys(session.user) : []
-    });
+  const session = await auth();
+  console.log('📋 会话状态:', {
+    hasSession: !!session,
+    hasUser: !!(session?.user),
+    hasUuid: !!(session?.user?.uuid),
+    userEmail: session?.user?.email
+  });
 
-    if (session && session.user && session.user.uuid) {
-      user_uuid = session.user.uuid;
-      console.log('✅ 从会话获取用户 UUID:', `${user_uuid.substring(0, 8)}...`);
-    } else {
-      console.log('❌ 会话中未找到用户 UUID');
-
-      // 基于 ShipAny 模板的详细诊断
-      if (session) {
-        console.log('🔍 会话存在但缺少用户信息:', {
-          sessionType: typeof session,
-          hasUser: !!session.user,
-          userType: typeof session.user,
-          userUuid: (session.user as any)?.uuid,
-          userEmail: (session.user as any)?.email
-        });
-      } else {
-        console.log('🔍 会话为空，可能的原因:');
-        console.log('  1. Cookie 未正确发送到服务端');
-        console.log('  2. JWT token 解析失败');
-        console.log('  3. 会话已过期');
-        console.log('  4. NextAuth 配置问题');
-      }
-    }
-  } catch (error) {
-    console.error('❌ 获取会话时发生错误:', error);
-    console.error('错误详情:', {
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error ? error.stack : undefined
-    });
+  if (session && session.user && session.user.uuid) {
+    user_uuid = session.user.uuid;
+    console.log('✅ 从会话获取用户 UUID:', `${user_uuid.substring(0, 8)}...`);
+  } else {
+    console.log('❌ 会话中未找到用户 UUID');
   }
 
   console.log('🔍 getUserUuid 执行完成，返回:', user_uuid ? `${user_uuid.substring(0, 8)}...` : '空');
