@@ -24,7 +24,7 @@ export async function GET() {
     });
     
     // 2. 检查 NextAuth cookies
-    const nextAuthCookies = [];
+    const nextAuthCookies: string[] = [];
     if (cookieHeader) {
       const cookies = cookieHeader.split(';');
       cookies.forEach(cookie => {

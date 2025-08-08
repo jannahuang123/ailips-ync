@@ -124,6 +124,22 @@ export const authOptions: NextAuthConfig = {
   pages: {
     signIn: "/auth/signin",
   },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60, // 30 days
+  },
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true,
+        // 不设置 domain，让浏览器自动处理
+      }
+    }
+  },
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       console.log('🚪 SignIn Callback 开始:', {
